@@ -40,6 +40,11 @@ Route::middleware(['auth:sanctum']) ->group(function() {
         Route::post('/update', [UserController::class, 'update'])->name('api.update');
         Route::post('/change-password', [UserController::class, 'changePassword'])->name('api.change_password');
     });
+    //product
+    Route::prefix('/product')->group(function() {
+        Route::post('/', [HangHoaController::class, 'viewFromBarcode'])->name('api.product.view');
+        Route::get('/', [HangHoaController::class, 'viewAll'])->name('api.prroduct.viewall');
+    });
 
 });
 
