@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\NhapKhoController;
@@ -29,6 +31,17 @@ Route::get('/xuat-kho/tao-phieu', [XuatKhoController::class, 'search'])->name('a
 Route::post('/hang-hoa', [HangHoaController::class, 'import'])->name('api.them-hang.import');
 Route::get('/doanh-thu', [DashboardController::class, 'doanhThu'])->name('api.doanh-thu');
 
+//api for application
+Route::post('/login', [AuthController::class, 'login'])->name('api.login');
+Route::middleware(['auth:sanctum']) ->group(function() {
+    //Information
+    Route::prefix('/information')->group(function() {
+        Route::post('/', [UserController::class, 'view'])->name('api.view');
+        Route::post('/update', [UserController::class, 'update'])->name('api.update');
+        Route::post('/change-password', [UserController::class, 'changePassword'])->name('api.change_password');
+    });
+
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
