@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('nha_cung_cap', function (Blueprint $table) {
             $table->id();
-            $table->char('ma_ncc');
+            $table->string('ma_ncc');
             $table->string('ten_ncc');
             $table->foreignId('id_trang_thai')->constrained('trang_thai')->cascadeOnDelete();
             $table->text('dia_chi')->nullable();
-            $table->integer('sdt')->nullable();
+            $table->string('sdt')->nullable();
             $table->text('mo_ta')->nullable();
             $table->timestamps();
         });

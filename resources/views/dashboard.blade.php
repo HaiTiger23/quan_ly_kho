@@ -14,15 +14,15 @@
                                         <div class="card-body">
                                             <div class="d-flex align-items-sm-center justify-content-between">
                                                 <span class="amount h6">Tổng nhập</span>
-                                                <span>{{ $tien_nhap_kho ?? 0 }} VNĐ</span>
+                                                <span>{{ number_format($tien_nhap_kho) ?? 0 }} VNĐ</span>
                                             </div>
                                             <div class="d-flex align-items-sm-center justify-content-between">
                                                 <span class="amount h6">Doanh thu</span>
-                                                <span>{{ $tien_xuat_kho ?? 0 }} VNĐ</span>
+                                                <span>{{ number_format($tien_xuat_kho) ?? 0 }} VNĐ</span>
                                             </div>
                                             <div class="d-flex align-items-sm-center justify-content-between">
                                                 <span class="amount h6">Lãi</span>
-                                                <span>{{ $lai ?? 0 }} VNĐ</span>
+                                                <span>{{ number_format($lai) ?? 0 }} VNĐ</span>
                                             </div>
                                         </div>
                                     </div>
@@ -82,25 +82,32 @@
                                         <thead class="table-light table-head-sm">
                                             <tr>
                                                 <th class="tb-col"><span class="overline-title">Hàng hóa</span></th>
-                                                <th class="tb-col tb-col-end tb-col-sm"><span class="overline-title">Xuất kho</span></th>
-                                                <th class="tb-col tb-col-end tb-col-sm"><span class="overline-title">Doanh thu</span></th>
+                                                <th class="tb-col tb-col-end tb-col-sm"><span class="overline-title">Xuất
+                                                        kho</span></th>
+                                                <th class="tb-col tb-col-end tb-col-sm"><span class="overline-title">Doanh
+                                                        thu</span></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($doanh_thu as $dt)
-                                            <tr>
-                                                <td class="tb-col">
-                                                    <div class="media-group">
-                                                        <div class="media media-md flex-shrink-0 media-middle">
-                                                            <img src="{{ asset('storage/images/hanghoa/' . $dt->img) }}"></div>
-                                                        <div class="media-text">
-                                                            <a href="{{ route('hang-hoa.show', $dt->ma_hang_hoa) }}"
-                                                                class="title">{{ strlen($dt->ten_hang_hoa) > 20 ? substr($dt->ten_hang_hoa, 0, 20) . '...' : substr($dt->ten_hang_hoa, 0, 20) }}</a>
-                                                    </div>
-                                                </td>
-                                                <td class="tb-col tb-col-end tb-col-sm"><span class="small">{{ $dt->so_luong }}</span></td>
-                                                <td class="tb-col tb-col-end tb-col-sm"><span class="small">{{ number_format($dt->doanh_thu, 0, '', '.') }} VNĐ</span></td>
-                                            </tr>
+                                                <tr>
+                                                    <td class="tb-col">
+                                                        <div class="media-group">
+                                                            <div class="media media-md flex-shrink-0 media-middle">
+                                                                <img
+                                                                    src="{{ asset('storage/images/hanghoa/' . $dt->img) }}">
+                                                            </div>
+                                                            <div class="media-text">
+                                                                <a href="{{ route('hang-hoa.show', $dt->ma_hang_hoa) }}"
+                                                                    class="title">{{ strlen($dt->ten_hang_hoa) > 20 ? substr($dt->ten_hang_hoa, 0, 20) . '...' : substr($dt->ten_hang_hoa, 0, 20) }}</a>
+                                                            </div>
+                                                    </td>
+                                                    <td class="tb-col tb-col-end tb-col-sm"><span
+                                                            class="small">{{ $dt->so_luong }}</span></td>
+                                                    <td class="tb-col tb-col-end tb-col-sm"><span
+                                                            class="small">{{ number_format($dt->doanh_thu, 0, '', '.') }}
+                                                            VNĐ</span></td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -116,7 +123,7 @@
 
 @section('script')
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             $.ajax({
                 url: '{{ route('api.doanh-thu') }}',
                 method: 'GET',

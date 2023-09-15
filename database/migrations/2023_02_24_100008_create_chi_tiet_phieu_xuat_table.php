@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('chi_tiet_phieu_xuat', function (Blueprint $table) {
             $table->id();
-            $table->char('ma_phieu_xuat')->references('ma_phieu_xuat')->on('phieu_xuat')->cascadeOnDelete();
+            $table->string('ma_phieu_xuat')->references('ma_phieu_xuat')->on('phieu_xuat')->cascadeOnDelete();
             $table->foreignId('id_chi_tiet_hang_hoa')->nullable()->constrained('chi_tiet_hang_hoa')->nullOnDelete();
-            $table->integer('so_luong')->unsigned();
-            $table->integer('gia_xuat')->unsigned();
+            $table->integer('so_luong');
+            $table->string('gia_xuat');
             $table->timestamps();
         });
     }
