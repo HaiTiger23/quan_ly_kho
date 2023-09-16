@@ -11,8 +11,9 @@ use App\Models\ChiTietXuatKho;
 use App\Models\ChiTietHangHoa;
 use App\Models\HangHoa;
 use App\Exports\XuatKhoExport;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
 
 class XuatKhoController extends Controller
 {
@@ -23,9 +24,9 @@ class XuatKhoController extends Controller
         $selectedValues = $request->input('selectedValues', []);
 
         $hang_hoa = ChiTietHangHoa::where('ma_hang_hoa', 'LIKE', "%{$query}%")
-                                    ->orWhereHas('getHangHoa', function ($q) use ($query) {
-                                        $q->where('ten_hang_hoa', 'LIKE', "%{$query}%");
-                                    })->with('getHangHoa')->get();
+            ->orWhereHas('getHangHoa', function ($q) use ($query) {
+                $q->where('ten_hang_hoa', 'LIKE', "%{$query}%");
+            })->with('getHangHoa')->get();
 
         $result = [];
 
@@ -44,7 +45,7 @@ class XuatKhoController extends Controller
         $errors = [];
 
         if (count($data) < 2) {
-            return response()->json(['message'=> 'Vui lòng thêm hàng hóa cần xuất kho!']);
+            return response()->json(['message' => 'Vui lòng thêm hàng hóa cần xuất kho!']);
         }
 
         $validator = Validator::make($data[0], [
@@ -62,7 +63,7 @@ class XuatKhoController extends Controller
         }
 
         if ($validator->fails()) {
-            return response()->json(['message'=> 'Có lỗi xảy ra trong quá trình nhập dữ liệu. Vui lòng thử lại sau!', 'errors' => $errors], 400);
+            return response()->json(['message' => 'Có lỗi xảy ra trong quá trình nhập dữ liệu. Vui lòng thử lại sau!', 'errors' => $errors], 400);
         }
 
         $phieu_xuat = XuatKho::create([
@@ -113,6 +114,14 @@ class XuatKhoController extends Controller
             $cthh->save();
         }
 
-        return response()->json(['message'=> 'Xuất kho thành công. Bạn sẽ được chuyển hướng sau vài giây!', 'type' => 'success', 'redirect' => route('xuat-kho.index')], 200);
+        return response()->json(['message' => 'Xuất kho thành công. Bạn sẽ được chuyển hướng sau vài giây!', 'type' => 'success', 'redirect' => route('xuat-kho.index')], 200);
+    }
+
+    public function addToCard(Request $request)
+    {
+        \Illuminate\Support\Facades\Redis::set('test_key', 'Hello, Redis!');
+        $value = \Illuminate\Support\Facades\Redis::get('test_key');
+
+        return response()->json(['value' => $value]);
     }
 }
