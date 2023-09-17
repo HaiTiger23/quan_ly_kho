@@ -27,10 +27,12 @@ use PHPUnit\Logging\TeamCity\TeamCityLogger;
 use PHPUnit\Logging\TestDox\HtmlRenderer as TestDoxHtmlRenderer;
 use PHPUnit\Logging\TestDox\PlainTextRenderer as TestDoxTextRenderer;
 use PHPUnit\Logging\TestDox\TestResultCollector as TestDoxResultCollector;
+use PHPUnit\Metadata\Api\CodeCoverage as CodeCoverageMetadataApi;
 use PHPUnit\Runner\CodeCoverage;
 use PHPUnit\Runner\Extension\ExtensionBootstrapper;
 use PHPUnit\Runner\Extension\Facade as ExtensionFacade;
 use PHPUnit\Runner\Extension\PharLoader;
+use PHPUnit\Runner\GarbageCollection\GarbageCollectionHandler;
 use PHPUnit\Runner\ResultCache\DefaultResultCache;
 use PHPUnit\Runner\ResultCache\NullResultCache;
 use PHPUnit\Runner\ResultCache\ResultCache;
@@ -87,7 +89,7 @@ final class Application
 
             $configuration = Registry::init(
                 $cliConfiguration,
-                $xmlConfiguration
+                $xmlConfiguration,
             );
 
             (new PhpHandler)->handle($configuration->php());
@@ -103,27 +105,51 @@ final class Application
             $this->executeCommandsThatRequireCliConfigurationAndTestSuite($cliConfiguration, $testSuite);
             $this->executeHelpCommandWhenThereIsNothingElseToDo($configuration, $testSuite);
 
-            $pharExtensions = null;
+            $pharExtensions                          = null;
+            $extensionRequiresCodeCoverageCollection = false;
+            $extensionReplacesOutput                 = false;
+            $extensionReplacesProgressOutput         = false;
+            $extensionReplacesResultOutput           = false;
 
             if (!$configuration->noExtensions()) {
                 if ($configuration->hasPharExtensionDirectory()) {
                     $pharExtensions = (new PharLoader)->loadPharExtensionsInDirectory(
-                        $configuration->pharExtensionDirectory()
+                        $configuration->pharExtensionDirectory(),
                     );
                 }
 
-                $this->bootstrapExtensions($configuration);
+                $bootstrappedExtensions                  = $this->bootstrapExtensions($configuration);
+                $extensionRequiresCodeCoverageCollection = $bootstrappedExtensions['requiresCodeCoverageCollection'];
+                $extensionReplacesOutput                 = $bootstrappedExtensions['replacesOutput'];
+                $extensionReplacesProgressOutput         = $bootstrappedExtensions['replacesProgressOutput'];
+                $extensionReplacesResultOutput           = $bootstrappedExtensions['replacesResultOutput'];
             }
 
-            CodeCoverage::instance()->init($configuration, CodeCoverageFilterRegistry::instance());
+            CodeCoverage::instance()->init(
+                $configuration,
+                CodeCoverageFilterRegistry::instance(),
+                $extensionRequiresCodeCoverageCollection,
+            );
 
-            $printer = OutputFacade::init($configuration);
+            if (CodeCoverage::instance()->isActive()) {
+                CodeCoverage::instance()->ignoreLines(
+                    (new CodeCoverageMetadataApi)->linesToBeIgnored($testSuite),
+                );
+            }
 
-            $this->writeRuntimeInformation($printer, $configuration);
-            $this->writePharExtensionInformation($printer, $pharExtensions);
-            $this->writeRandomSeedInformation($printer, $configuration);
+            $printer = OutputFacade::init(
+                $configuration,
+                $extensionReplacesProgressOutput,
+                $extensionReplacesResultOutput,
+            );
 
-            $printer->print(PHP_EOL);
+            if (!$extensionReplacesOutput) {
+                $this->writeRuntimeInformation($printer, $configuration);
+                $this->writePharExtensionInformation($printer, $pharExtensions);
+                $this->writeRandomSeedInformation($printer, $configuration);
+
+                $printer->print(PHP_EOL);
+            }
 
             $this->registerLogfileWriters($configuration);
 
@@ -132,6 +158,13 @@ final class Application
             TestResultFacade::init();
 
             $resultCache = $this->initializeTestResultCache($configuration);
+
+            if ($configuration->controlGarbageCollector()) {
+                new GarbageCollectionHandler(
+                    EventFacade::instance(),
+                    $configuration->numberOfTestsBeforeGarbageCollection(),
+                );
+            }
 
             EventFacade::instance()->seal();
 
@@ -143,7 +176,7 @@ final class Application
             $runner->run(
                 $configuration,
                 $resultCache,
-                $testSuite
+                $testSuite,
             );
 
             $duration = $timer->stop();
@@ -157,29 +190,34 @@ final class Application
             if ($testDoxResult !== null &&
                 $configuration->hasLogfileTestdoxHtml()) {
                 OutputFacade::printerFor($configuration->logfileTestdoxHtml())->print(
-                    (new TestDoxHtmlRenderer)->render($testDoxResult)
+                    (new TestDoxHtmlRenderer)->render($testDoxResult),
                 );
             }
 
             if ($testDoxResult !== null &&
                 $configuration->hasLogfileTestdoxText()) {
                 OutputFacade::printerFor($configuration->logfileTestdoxText())->print(
-                    (new TestDoxTextRenderer)->render($testDoxResult)
+                    (new TestDoxTextRenderer)->render($testDoxResult),
                 );
             }
 
             $result = TestResultFacade::result();
 
-            OutputFacade::printResult($result, $testDoxResult, $duration);
+            if (!$extensionReplacesResultOutput) {
+                OutputFacade::printResult($result, $testDoxResult, $duration);
+            }
+
             CodeCoverage::instance()->generateReports($printer, $configuration);
 
             $shellExitCode = (new ShellExitCodeCalculator)->calculate(
+                $configuration->failOnDeprecation(),
                 $configuration->failOnEmptyTestSuite(),
-                $configuration->failOnRisky(),
-                $configuration->failOnWarning(),
                 $configuration->failOnIncomplete(),
+                $configuration->failOnNotice(),
+                $configuration->failOnRisky(),
                 $configuration->failOnSkipped(),
-                $result
+                $configuration->failOnWarning(),
+                $result,
             );
 
             EventFacade::emitter()->applicationFinished($shellExitCode);
@@ -204,7 +242,7 @@ final class Application
             PHP_EOL,
             PHP_EOL,
             PHP_EOL,
-            $message
+            $message,
         );
 
         $first = true;
@@ -219,7 +257,7 @@ final class Application
                 PHP_EOL,
                 PHP_EOL,
                 $t->getTraceAsString(),
-                PHP_EOL
+                PHP_EOL,
             );
 
             $first = false;
@@ -252,24 +290,37 @@ final class Application
             $this->exitWithErrorMessage(
                 sprintf(
                     'Cannot open bootstrap script "%s"',
-                    $filename
-                )
+                    $filename,
+                ),
             );
         }
 
         try {
             include_once $filename;
         } catch (Throwable $t) {
-            $this->exitWithErrorMessage(
-                sprintf(
-                    'Error in bootstrap script: %s:%s%s%s%s',
+            $message = sprintf(
+                'Error in bootstrap script: %s:%s%s%s%s',
+                $t::class,
+                PHP_EOL,
+                $t->getMessage(),
+                PHP_EOL,
+                $t->getTraceAsString(),
+            );
+
+            while ($t = $t->getPrevious()) {
+                $message .= sprintf(
+                    '%s%sPrevious error: %s:%s%s%s%s',
+                    PHP_EOL,
+                    PHP_EOL,
                     $t::class,
                     PHP_EOL,
                     $t->getMessage(),
                     PHP_EOL,
-                    $t->getTraceAsString()
-                )
-            );
+                    $t->getTraceAsString(),
+                );
+            }
+
+            $this->exitWithErrorMessage($message);
         }
 
         EventFacade::emitter()->testRunnerBootstrapFinished($filename);
@@ -286,7 +337,7 @@ final class Application
         return $cliConfiguration;
     }
 
-    private function loadXmlConfiguration(string|false $configurationFile): XmlConfiguration
+    private function loadXmlConfiguration(false|string $configurationFile): XmlConfiguration
     {
         if (!$configurationFile) {
             return DefaultConfiguration::create();
@@ -308,31 +359,34 @@ final class Application
         }
     }
 
-    private function bootstrapExtensions(Configuration $configuration): void
+    /**
+     * @psalm-return array{requiresCodeCoverageCollection: bool, replacesOutput: bool, replacesProgressOutput: bool, replacesResultOutput: bool}
+     */
+    private function bootstrapExtensions(Configuration $configuration): array
     {
+        $facade = new ExtensionFacade;
+
         $extensionBootstrapper = new ExtensionBootstrapper(
             $configuration,
-            new ExtensionFacade
+            $facade,
         );
 
         foreach ($configuration->extensionBootstrappers() as $bootstrapper) {
-            try {
-                $extensionBootstrapper->bootstrap(
-                    $bootstrapper['className'],
-                    $bootstrapper['parameters']
-                );
-            } catch (\PHPUnit\Runner\Exception $e) {
-                $this->exitWithErrorMessage(
-                    sprintf(
-                        'Error while bootstrapping extension: %s',
-                        $e->getMessage()
-                    )
-                );
-            }
+            $extensionBootstrapper->bootstrap(
+                $bootstrapper['className'],
+                $bootstrapper['parameters'],
+            );
         }
+
+        return [
+            'requiresCodeCoverageCollection' => $facade->requiresCodeCoverageCollection(),
+            'replacesOutput'                 => $facade->replacesOutput(),
+            'replacesProgressOutput'         => $facade->replacesProgressOutput(),
+            'replacesResultOutput'           => $facade->replacesResultOutput(),
+        ];
     }
 
-    private function executeCommandsThatOnlyRequireCliConfiguration(CliConfiguration $cliConfiguration, string|false $configurationFile): void
+    private function executeCommandsThatOnlyRequireCliConfiguration(CliConfiguration $cliConfiguration, false|string $configurationFile): void
     {
         if ($cliConfiguration->generateConfiguration()) {
             $this->execute(new GenerateConfigurationCommand);
@@ -377,8 +431,8 @@ final class Application
             $this->execute(
                 new ListTestsAsXmlCommand(
                     $cliConfiguration->listTestsXml(),
-                    $testSuite
-                )
+                    $testSuite,
+                ),
             );
         }
     }
@@ -417,13 +471,13 @@ final class Application
             $this->writeMessage(
                 $printer,
                 'Configuration',
-                $configuration->configurationFile()
+                $configuration->configurationFile(),
             );
         }
     }
 
     /**
-     * @psalm-param ?array{loadedExtensions: list<string>, notLoadedExtensions: list<string>} $pharExtensions
+     * @psalm-param ?list<string> $pharExtensions
      */
     private function writePharExtensionInformation(Printer $printer, ?array $pharExtensions): void
     {
@@ -431,19 +485,11 @@ final class Application
             return;
         }
 
-        foreach ($pharExtensions['loadedExtensions'] as $extension) {
+        foreach ($pharExtensions as $extension) {
             $this->writeMessage(
                 $printer,
                 'Extension',
-                $extension
-            );
-        }
-
-        foreach ($pharExtensions['notLoadedExtensions'] as $extension) {
-            $this->writeMessage(
-                $printer,
-                'Extension',
-                $extension
+                $extension,
             );
         }
     }
@@ -454,8 +500,8 @@ final class Application
             sprintf(
                 "%-15s%s\n",
                 $type . ':',
-                $message
-            )
+                $message,
+            ),
         );
     }
 
@@ -465,7 +511,7 @@ final class Application
             $this->writeMessage(
                 $printer,
                 'Random Seed',
-                (string) $configuration->randomOrderSeed()
+                (string) $configuration->randomOrderSeed(),
             );
         }
     }
@@ -484,8 +530,8 @@ final class Application
             EventFacade::instance()->registerTracer(
                 new EventLogger(
                     $configuration->logEventsText(),
-                    false
-                )
+                    false,
+                ),
             );
         }
 
@@ -497,24 +543,24 @@ final class Application
             EventFacade::instance()->registerTracer(
                 new EventLogger(
                     $configuration->logEventsVerboseText(),
-                    true
-                )
+                    true,
+                ),
             );
         }
 
         if ($configuration->hasLogfileJunit()) {
             new JunitXmlLogger(
                 OutputFacade::printerFor($configuration->logfileJunit()),
-                EventFacade::instance()
+                EventFacade::instance(),
             );
         }
 
         if ($configuration->hasLogfileTeamcity()) {
             new TeamCityLogger(
                 DefaultPrinter::from(
-                    $configuration->logfileTeamcity()
+                    $configuration->logfileTeamcity(),
                 ),
-                EventFacade::instance()
+                EventFacade::instance(),
             );
         }
     }
