@@ -2,8 +2,8 @@
 
 @section('style')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
-        integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw==" crossorigin="anonymous"
-        referrerpolicy="no-referrer" />
+        integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 @endsection
 
@@ -29,9 +29,10 @@
                         </div>
                     </div>
                     <div class="nk-block">
-                        <form action="#" method="POST" id="form-create">
+                        <div>
                             @csrf
-                            <div class="row g-gs">
+                            <form method="POST" id="form-create" class="row g-gs">
+                                @csrf
                                 <div class="col-xxl-12">
                                     <div class="gap gy-4">
                                         <div class="gap-col">
@@ -40,13 +41,16 @@
                                                     <div class="row g-gs">
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <label for="ma_phieu_xuat" class="form-label">Mã phiếu xuất</label>
+                                                                <label for="ma_phieu_xuat" class="form-label">Mã phiếu
+                                                                    xuất</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" minlength="1" maxlength="255" class="form-control" name="ma_phieu_xuat"
-                                                                        value="{{ $ma_phieu_xuat }}" disabled>
+                                                                    <input type="text" minlength="1" maxlength="255"
+                                                                        class="form-control" name="ma_phieu_xuat"
+                                                                        value="{{ $ma_phieu_xuat }}">
                                                                 </div>
                                                                 @if ($errors)
-                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('ma_phieu_xuat') }}</span>
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('ma_phieu_xuat') }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -54,32 +58,41 @@
                                                             <div class="form-group">
                                                                 <label for="ngay_xuat" class="form-label">Ngày xuất</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="date" class="form-control" name="ngay_xuat" value="{{ old('ngay_xuat') }}"
+                                                                    <input type="date" class="form-control"
+                                                                        name="ngay_xuat" value="{{ old('ngay_xuat') }}"
                                                                         required>
                                                                 </div>
                                                                 @if ($errors)
-                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('ngay_xuat') }}</span>
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('ngay_xuat') }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="form-group"> <label for="khach_hang" class="form-label">Khách hàng</label>
+                                                            <div class="form-group"> <label for="khach_hang"
+                                                                    class="form-label">Khách hàng</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" name="khach_hang" placeholder="Nhập khách hàng"
+                                                                    <input type="text" class="form-control"
+                                                                        name="khach_hang" placeholder="Nhập khách hàng"
                                                                         value="{{ old('khach_hang') }}" required>
                                                                 </div>
                                                                 @if ($errors)
-                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('khach_hang') }}</span>
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('khach_hang') }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="form-group"> <label for="dia_chi" class="form-label">Địa chỉ</label>
-                                                                <div class="form-control-wrap"> <input type="text" class="form-control" name="dia_chi"
-                                                                        placeholder="Nhập địa chỉ" value="{{ old('dia_chi') }}" required>
+                                                            <div class="form-group"> <label for="dia_chi"
+                                                                    class="form-label">Địa chỉ</label>
+                                                                <div class="form-control-wrap"> <input type="text"
+                                                                        class="form-control" name="dia_chi"
+                                                                        placeholder="Nhập địa chỉ"
+                                                                        value="{{ old('dia_chi') }}" required>
                                                                 </div>
                                                                 @if ($errors)
-                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('dia_chi') }}</span>
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('dia_chi') }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -87,10 +100,22 @@
                                                             <div class="form-group">
                                                                 <label class="form-label">Chi tiết</label>
                                                                 <div class="form-control-wrap">
-                                                                    <div class="js-quill" id="quill_editor" value="{!! old('mo_ta') !!}" data-toolbar="minimal"
+                                                                    <div class="js-quill" id="quill_editor"
+                                                                        value="{!! old('mo_ta') !!}"
+                                                                        data-toolbar="minimal"
                                                                         data-placeholder="Viết chi tiết sản phẩm vào đây...">
                                                                     </div>
                                                                     <input type="hidden" name="mo_ta">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Đơn Giá</label>
+                                                                <input type="hidden" id="don_gia" name="don_gia"
+                                                                    value="0">
+                                                                <div class="form-control-wrap" id="donGia">
+                                                                    0 VND
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -98,16 +123,79 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        {{-- chi tiet đơn hàng --}}
+
+                                        <div class="gap-col">
+                                            <div class="card card-gutter-md">
+                                                <table id="item-table" class="table"
+                                                    data-nk-container="table-responsive">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th class="tb-col"><span class="overline-title">ID</span></th>
+                                                            <th class="tb-col"><span class="overline-title">Tên
+                                                                    hàng</span></th>
+                                                            <th class="tb-col"><span class="overline-title">Giá</span>
+                                                            <th class="tb-col"><span class="overline-title">SL</span>
+                                                            </th>
+                                                            </th>
+                                                            </th>
+                                                            <th class="tb-col tb-col-end"><span
+                                                                    class="overline-title">Hành động</span></th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody id="tableChiTietXuat">
+                                                        {{-- item --}}
+                                                        {{-- <tr class="item-row mb-4">
+                                                            <td class="tb-col">
+                                                                <div class="form-control-wrap d-flex">
+                                                                    1.
+                                                                </div>
+                                                            </td>
+                                                            <td class="tb-col">
+                                                                <div class="form-control-wrap d-flex">
+                                                                    <input style="width:100%" list="ma_hang_hoa"
+                                                                        name="ma_hang_hoa[]" class="form-control">
+
+                                                                </div>
+                                                            </td>
+                                                            <td class="tb-col">
+                                                                <div class="form-control-wrap"><input style="width:100%"
+                                                                        type="number" min="1" max="1000000000"
+                                                                        class="form-control" name="so_luong[]" required />
+                                                                </div>
+                                                            </td>
+                                                            <td class="tb-col">
+                                                                <div class="form-control-wrap"><input style="width:100%"
+                                                                        type="number" min="1" max="1000000000"
+                                                                        class="form-control" name="gia_nhap[]" required />
+                                                                </div>
+                                                            </td>
+                                                            <td class="tb-col tb-col-end text-center"><button
+                                                                    type="button"
+                                                                    class="btn btn-danger btn-sm remove-item">Xóa</button>
+                                                            </td>
+                                                        </tr> --}}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        {{-- buttons --}}
+
                                         <div class="gap-col">
                                             <ul class="d-flex justify-content-end gap g-3">
                                                 <li>
-                                                    <button id="btn-submit" type="submit" class="btn btn-primary d-md-inline-flex">
+                                                    <button id="btn-submit" type="submit"
+                                                        class="btn btn-primary d-md-inline-flex">
                                                         <em class="icon ni ni-plus"></em>
                                                         <span>Xác nhận</span>
                                                     </button>
                                                 </li>
                                                 <li style="margin-left: 10px">
-                                                    <button id="btn-export" type="submit" class="btn btn-primary d-md-inline-flex">
+                                                    <button id="btn-export" type="submit"
+                                                        class="btn btn-primary d-md-inline-flex">
                                                         <em class="icon ni ni-file-download"></em>
                                                         <span>Export</span>
                                                     </button>
@@ -116,37 +204,79 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
+                            {{-- all hàng hóa --}}
 
-                            <div class="form-group my-5">
-                                <label for="searchInput" class="form-label w-full">Tìm kiếm</label>
-                                <div class="form-control-wrap">
-                                    <div class="form-control-icon start">
-                                        <em class="icon ni ni-search"></em>
-                                    </div>
-                                    <input type="text" class="form-control" name="searchInput" id="searchInput" placeholder="Input text placeholder">
+                            <div class="nk-block mt-4">
+                                <div class="card">
+                                    <table class="datatable-init table" data-nk-container="table-responsive"
+                                        id="hang-hoa">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="tb-col"><span class="overline-title">STT</span></th>
+                                                <th class="tb-col"><span class="overline-title">Mã hàng</span></th>
+                                                <th class="tb-col"><span class="overline-title">Tên hàng</span></th>
+                                                <th class="tb-col"><span class="overline-title">SL</span></th>
+                                                <th class="tb-col"><span class="overline-title">Đơn vị</span></th>
+                                                <th class="tb-col"><span class="overline-title">Loại hàng</span></th>
+                                                <th class="tb-col"><span class="overline-title">Trạng thái</span></th>
+                                                <th class="tb-col"><span class="overline-title">Giá bán</span></th>
+                                                <th class="tb-col tb-col-end" data-sortable="false"><span
+                                                        class="overline-title">Hành động</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($hang_hoa as $key => $hang)
+                                                <tr id="hang-{{ $hang->ma_hang_hoa }}">
+                                                    <td class="tb-col">
+                                                        <span>{{ $key + 1 }}</span>
+                                                    </td>
+                                                    <td class="tb-col">
+                                                        <input type="hidden" class="idHang"
+                                                            value="{{ $hang->id }}">
+                                                        <span>{{ strlen($hang->ma_hang_hoa) > 10 ? substr($hang->ma_hang_hoa, 0, 10) . '...' : substr($hang->ma_hang_hoa, 0, 10) }}</span>
+                                                    </td>
+                                                    <td class="tb-col">
+                                                        <div class="media-group">
+                                                            <div class="media-text">
+                                                                <input type="hidden" class="tenHangHoa"
+                                                                    value="{{ $hang->ten_hang_hoa }}">
+                                                                <a href="{{ route('hang-hoa.show', $hang->ma_hang_hoa) }}"
+                                                                    class="title">{{ strlen($hang->ten_hang_hoa) > 20 ? substr($hang->ten_hang_hoa, 0, 20) . '...' : substr($hang->ten_hang_hoa, 0, 20) }}</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    @php
+                                                        $so_luong = 0;
+                                                        foreach ($hang->getChiTiet as $value) {
+                                                            $so_luong += $value->so_luong;
+                                                        }
+                                                    @endphp
+                                                    <td class="tb-col"><span>{{ $so_luong }}</span></td>
+                                                    <td class="tb-col"><span>{{ $hang->don_vi_tinh }}</span></td>
+                                                    <td class="tb-col">
+                                                        <span>{{ strlen($hang->getLoaiHang->ten_loai_hang) > 15 ? substr($hang->getLoaiHang->ten_loai_hang, 0, 15) . '...' : substr($hang->getLoaiHang->ten_loai_hang, 0, 15) }}</span>
+                                                    </td>
+                                                    <td class="tb-col">
+                                                        <span
+                                                            class="badge text-bg-{{ $so_luong > 0 ? 'success' : 'danger' }}-soft">{{ $so_luong > 0 ? 'Còn hàng' : 'Hết hàng' }}</span>
+                                                    </td>
+                                                    <td class="tb-col">
+                                                        <input type="hidden" value="{{ $hang->gia_ban }}"
+                                                            class="giaBan">
+                                                        <span>{{ number_format($hang->gia_ban) }} VND</span>
+                                                    </td>
+                                                    <td class="tb-col tb-col-end text-center">
+                                                        <div class="btn btn-primary btn-sm" onclick="addItem(this)"
+                                                            data-index="{{ $hang->ma_hang_hoa }}">Thêm</div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="card" id="hang-hoa-container">
-                                <table class="table" data-nk-container="table-responsive">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th class="tb-col"><span class="overline-title">Mã hàng hóa</span></th>
-                                            <th class="tb-col"><span class="overline-title">Tên hàng hóa</span></th>
-                                            <th class="tb-col"><span class="overline-title">ĐVT</span></th>
-                                            <th class="tb-col"><span class="overline-title">Tồn kho</span></th>
-                                            <th class="tb-col"><span class="overline-title">Số lượng</span></th>
-                                            <th class="tb-col"><span class="overline-title">Đơn giá</span></th>
-                                            <th class="tb-col"><span class="overline-title">Thành tiền</span></th>
-                                            <th class="tb-col tb-col-end" data-sortable="false"><span class="overline-title">Hành động</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,7 +286,8 @@
         <div id="liveToast" class="toast fade hide alert" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body"></div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
             </div>
         </div>
     </div>
@@ -165,8 +296,8 @@
 @section('script')
     <script src="{{ asset('assets/js/libs/editors/quill.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
-        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous"
-        referrerpolicy="no-referrer"></script>
+        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
         $(document).ready(function() {
@@ -207,7 +338,8 @@
                                         ngay_san_xuat: item.ngay_san_xuat,
                                         tg_bao_quan: item.tg_bao_quan,
                                         ma_hang_hoa: item.get_hang_hoa.ma_hang_hoa,
-                                        ten_hang_hoa: item.get_hang_hoa.ten_hang_hoa,
+                                        ten_hang_hoa: item.get_hang_hoa
+                                            .ten_hang_hoa,
                                         don_vi_tinh: item.get_hang_hoa.don_vi_tinh,
                                         hang_hoa: item
                                     }
@@ -389,5 +521,139 @@
                 return true
             }
         });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"
+        integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var socket = io('http://localhost:6001')
+        socket.on('laravel_database_Cart', (data) => {
+            let items = document.querySelectorAll('.item-row');
+            let check = true
+            items.forEach(function(item) {
+                if (item.getAttribute('id') == data.data.sanPham.ma_hang_hoa) {
+                    check = false
+                    let soluong = item.querySelector('.soLuong').value;
+                    item.querySelector('.soLuong').value = parseInt(soluong) + 1;
+                }
+            });
+            if (check) {
+                let gia_ban = new Intl.NumberFormat('en-IN', {
+                    maximumSignificantDigits: 3
+                }).format(data.data.sanPham.gia_ban)
+                $('#tableChiTietXuat').append(`
+                <tr class="item-row mb-4" id="${data.data.sanPham.ma_hang_hoa}">
+                    <td class="tb-col">
+                        <input type="hidden" name="id[]" value="${data.data.sanPham.id}"/>
+                        <input type="hidden" name="ma_hang_hoa[]" value="${data.data.sanPham.ma_hang_hoa}"/>
+                        <div class="form-control-wrap d-flex">
+                            ${data.data.sanPham.ma_hang_hoa}
+                        </div>
+                    </td>
+                    <td class="tb-col">
+                        <div class="overflow-col">
+                            ${data.data.sanPham.ten_hang_hoa}
+                        </div>
+                    </td>
+                    <td class="tb-col">
+                        <input style="width:100%" type="hidden"
+                            class="form-control" name="gia_ban[]" value="${data.data.sanPham.gia_ban}" />
+                        <div class="form-control-wrap d-flex">
+                             ${gia_ban} VND
+                        </div>
+                    </td>
+                    <td class="tb-col">
+                        <div class="form-control-wrap"><input style="width:100%"
+                                type="number" min="1" max="1000000000"
+                                class="form-control soLuong" name="so_luong[]" required  value="1"/>
+                        </div>
+                    </td>
+                    <td class="tb-col tb-col-end text-center"><div class="btn btn-danger btn-sm" onclick="removeItem(this)" data-index="${data.data.sanPham.ma_hang_hoa}">Xóa</div>
+                    </td>
+                </tr>
+                `)
+            }
+        })
+    </script>
+    <script>
+        function removeItem(e) {
+            let id = e.getAttribute('data-index');
+            let items = document.querySelectorAll('.item-row');
+            items.forEach(function(item) {
+                if (item.getAttribute('id') == id) {
+                    item.remove();
+                }
+            });
+        }
+
+        function addItem(e) {
+            let item = document.querySelector('#hang-' + e.getAttribute('data-index'))
+            let items = document.querySelectorAll('.item-row');
+            let check = true
+
+            let donGia = document.querySelector('#donGia')
+            let donGiaInput = document.querySelector('#don_gia').value
+
+            document.querySelector('#don_gia').value = parseInt(donGiaInput) + parseInt(item.querySelector('.giaBan').value)
+
+            let gia = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(parseInt(donGiaInput) + parseInt(item.querySelector('.giaBan').value))
+
+            donGia.innerHTML = gia
+
+            items.forEach(function(item) {
+                if (item.getAttribute('id') == e.getAttribute('data-index')) {
+                    check = false
+                    let soluong = item.querySelector('.soLuong').value;
+                    item.querySelector('.soLuong').value = parseInt(soluong) + 1;
+                }
+            });
+            if (check) {
+                let itemData = {
+                    id: e.getAttribute('data-index'),
+                    idHang: item.querySelector('.idHang').value,
+                    tenHangHoa: item.querySelector('.tenHangHoa').value,
+                    giaBan: item.querySelector('.giaBan').value,
+                    soluong: 1
+                }
+
+                let gia_ban = new Intl.NumberFormat('en-IN', {
+                    maximumSignificantDigits: 3
+                }).format(itemData.giaBan)
+                $('#tableChiTietXuat').append(`
+                <tr class="item-row mb-4" id="${itemData.id}">
+                    <td class="tb-col">
+                        <input type="hidden" name="id[]" value="${itemData.idHang}"/>
+                        <input type="hidden" name="ma_hang_hoa[]" value="${itemData.id}"/>
+                        <div class="form-control-wrap d-flex">
+                            ${itemData.id}
+                        </div>
+                    </td>
+                    <td class="tb-col">
+                        <div class="overflow-col">
+                            ${itemData.tenHangHoa}
+                        </div>
+                    </td>
+                    <td class="tb-col">
+                        <input style="width:100%" type="hidden"
+                            class="form-control" name="gia_ban[]" value="${itemData.giaBan}" />
+                        <div class="form-control-wrap d-flex">
+                             ${gia_ban} VND
+                        </div>
+                    </td>
+                    <td class="tb-col">
+                        <div class="form-control-wrap"><input style="width:100%"
+                                type="number" min="1" max="1000000000"
+                                class="form-control soLuong" name="so_luong[]" required  value="1"/>
+                        </div>
+                    </td>
+                    <td class="tb-col tb-col-end text-center"><div class="btn btn-danger btn-sm" onclick="removeItem(this)" data-index="${itemData.id}">Xóa</div>
+                    </td>
+                </tr>
+                `)
+            }
+        }
     </script>
 @endsection

@@ -66,7 +66,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     @foreach ($hang_hoa as $key => $hang)
                                         <tr>
                                             <td class="tb-col">

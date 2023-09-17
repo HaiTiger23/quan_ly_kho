@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\AddCart;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -119,9 +120,12 @@ class XuatKhoController extends Controller
 
     public function addToCard(Request $request)
     {
-        \Illuminate\Support\Facades\Redis::set('test_key', 'Hello, Redis!');
-        $value = \Illuminate\Support\Facades\Redis::get('test_key');
 
-        return response()->json(['value' => $value]);
+        $sanPham = HangHoa::where('ma_hang_hoa', $request->maSanPham)->first();
+
+        event($event = new AddCart($sanPham));
+
+        // $chat = Chat::create($data);
+        // return redirect()->back();
     }
 }

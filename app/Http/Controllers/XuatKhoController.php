@@ -11,6 +11,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class XuatKhoController extends Controller
@@ -34,7 +36,6 @@ class XuatKhoController extends Controller
                 $phieu_xuat[] = $phieu;
             }
         });
-
         return view('xuatkho.index', compact('phieu_xuat', 'ma_phieu_xuat'));
     }
 
@@ -51,7 +52,17 @@ class XuatKhoController extends Controller
         $nextNumber = $lastNumber + 1;
         $ma_phieu_xuat = 'PX' . str_pad($nextNumber, $lastNumberLength, '0', STR_PAD_LEFT);
 
-        return view('xuatkho.create', compact('ma_phieu_xuat'));
+        $hang_hoa = [];
+
+        HangHoa::orderBy('id')->chunkById(100, function ($chunk) use (&$hang_hoa) {
+            foreach ($chunk as $hang) {
+                if ($hang->getLoaiHang->id_trang_thai != 1) {
+                    $hang_hoa[] = $hang;
+                }
+            }
+        });
+
+        return view('xuatkho.create', compact('ma_phieu_xuat', 'hang_hoa'));
     }
 
     /**
@@ -59,7 +70,31 @@ class XuatKhoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $phieu_xuat = XuatKho::create([
+                'ma_phieu_xuat' => $request->ma_phieu_xuat,
+                'khach_hang' => $request->khach_hang,
+                'ngay_xuat' => $request->ngay_xuat,
+                'mo_ta' => $request->mo_ta,
+                'don_gia' => $request->don_gia,
+                'id_user' => Auth::user()->id,
+            ]);
+
+            for ($i = 0; $i < count($request['ma_hang_hoa']); $i++) {
+                ChiTietXuatKho::create([
+                    'ma_phieu_xuat' => $phieu_xuat->ma_phieu_xuat,
+                    'id_chi_tiet_hang_hoa' => $request->id[$i],
+                    'so_luong' => $request->so_luong[$i],
+                    'gia_xuat' => $request->gia_ban[$i]
+                ]);
+            }
+            DB::commit();
+            return redirect('/xuat-kho')->with('success', 'xuất hóa đơn thành công');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th);
+        }
     }
 
     /**
