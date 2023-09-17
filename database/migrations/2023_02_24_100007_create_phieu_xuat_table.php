@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('phieu_xuat', function (Blueprint $table) {
             $table->id();
-            $table->char('ma_phieu_xuat')->unique();
-            $table->string('khach_hang');
-            $table->text('dia_chi');
+            $table->string('ma_phieu_xuat')->unique();
+            $table->string('khach_hang')->nullable();
+            $table->string('don_gia');
             $table->date('ngay_xuat')->default(now()->toDateString());
             $table->text('mo_ta')->nullable();
             $table->foreignId('id_user')->nullable()->constrained('users')->cascadeOnDelete();

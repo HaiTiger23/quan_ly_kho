@@ -28,6 +28,11 @@ Route::post('/xuat-kho/tao-phieu/store', [XuatKhoController::class, 'store'])->n
 Route::post('/xuat-kho/tao-phieu/export', [XuatKhoController::class, 'export'])->name('api.xuat-kho.export');
 Route::get('/xuat-kho/tao-phieu', [XuatKhoController::class, 'search'])->name('api.xuat-kho.search');
 
+Route::middleware(['web'])->group(function () {
+    Route::get('/xuat-kho/them-san-pham', [App\Http\Controllers\Api\XuatKhoController::class, 'addToCard'])->name('api.xuat-kho.add')->middleware('guest');
+});
+
+
 Route::post('/hang-hoa', [HangHoaController::class, 'import'])->name('api.them-hang.import');
 Route::get('/doanh-thu', [DashboardController::class, 'doanhThu'])->name('api.doanh-thu');
 

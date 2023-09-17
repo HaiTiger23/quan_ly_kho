@@ -6,10 +6,8 @@
                     <img class="logo-svg" src="{{ asset('assets/images/favicon.png') }}" alt="">
                 </div>
             </a>
-            <div class="nk-compact-toggle me-n1"><button class="btn btn-md btn-icon text-light btn-no-hover compact-toggle"><em
-                        class="icon off ni ni-chevrons-left"></em><em class="icon on ni ni-chevrons-right"></em></button>
-            </div>
-            <div class="nk-sidebar-toggle me-n1"><button class="btn btn-md btn-icon text-light btn-no-hover sidebar-toggle"><em
+            <div class="nk-sidebar-toggle me-n1"><button
+                    class="btn btn-md btn-icon text-light btn-no-hover sidebar-toggle"><em
                         class="icon ni ni-arrow-left"></em></button></div>
         </div>
     </div>

@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('hang_hoa', function (Blueprint $table) {
             $table->id();
-            $table->char('ma_hang_hoa')->unique();
+            $table->string('ma_hang_hoa')->unique();
             $table->string('ten_hang_hoa');
             $table->text('mo_ta')->nullable();
             $table->foreignId('id_loai_hang')->constrained('loai_hang')->cascadeOnDelete();
             $table->string('don_vi_tinh');
-            $table->integer('barcode')->nullable();
-            $table->char('img')->nullable();
+            $table->string('gia_ban');
+            $table->string('barcode')->nullable();
+            $table->text('img')->nullable();
             $table->timestamps();
         });
     }
