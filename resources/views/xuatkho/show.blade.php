@@ -12,8 +12,10 @@
                                 <nav>
                                     <ol class="breadcrumb breadcrumb-arrow mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('xuat-kho.index') }}">Quản lý xuất kho</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">{{ $phieu_xuat->ma_phieu_xuat }}
+                                        <li class="breadcrumb-item"><a href="{{ route('xuat-kho.index') }}">Quản lý xuất
+                                                kho</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">
+                                            {{ $phieu_xuat->ma_phieu_xuat }}
                                         </li>
                                     </ol>
                                 </nav>
@@ -31,14 +33,14 @@
                                         <ul>
                                             <li>Nhân viên: {{ $phieu_xuat->getUsers->name }}</li>
                                             <li>Khách hàng: {{ $phieu_xuat->khach_hang }}</li>
-                                            <li>Địa chỉ: {{ $phieu_xuat->dia_chi }}</li>
-                                            <li>Lý do: {{ $phieu_xuat->mo_ta }}</li>
                                         </ul>
                                     </div>
                                     <div class="nk-invoice-head-item text-sm-end">
                                         <div class="h3">Mã phiếu xuất: {{ $phieu_xuat->ma_phieu_xuat }}</div>
                                         <ul>
-                                            <li>Ngày xuất: {{ \Carbon\Carbon::createFromFormat('Y-m-d', $phieu_xuat->ngay_xuat)->format('d-m-Y') }}</li>
+                                            <li>Ngày xuất:
+                                                {{ \Carbon\Carbon::createFromFormat('Y-m-d', $phieu_xuat->ngay_xuat)->format('d-m-Y') }}
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -51,10 +53,12 @@
                                                     <th class="tb-col"><span class="overline-title">Mã hàng hóa</span></th>
                                                     <th class="tb-col"><span class="overline-title">Tên hàng hóa</span></th>
                                                     <th class="tb-col"><span class="overline-title">NSX</span></th>
-                                                    <th class="tb-col"><span class="overline-title">Bảo quản(tháng)</span></th>
+                                                    <th class="tb-col"><span class="overline-title">Bảo quản(tháng)</span>
+                                                    </th>
                                                     <th class="tb-col"><span class="overline-title">Số lượng</span></th>
                                                     <th class="tb-col"><span class="overline-title">Giá xuất</span></th>
-                                                    <th class="tb-col tb-col-end"><span class="overline-title">Thành tiền</span></th>
+                                                    <th class="tb-col tb-col-end"><span class="overline-title">Thành
+                                                            tiền</span></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -74,16 +78,22 @@
                                                         <td class="tb-col">
                                                             <span>{{ $chi_tiet->getChiTiet->getHangHoa->ma_hang_hoa }}</span>
                                                         </td>
-                                                        <td class="tb-col">
+                                                        <td class="overflow-col">
                                                             <span>{{ $chi_tiet->getChiTiet->getHangHoa->ten_hang_hoa }}</span>
                                                         </td>
                                                         <td class="tb-col">
                                                             <span>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $chi_tiet->getChiTiet->ngay_san_xuat)->format('m/d/Y') }}</span>
                                                         </td>
-                                                        <td class="tb-col"><span>{{ $chi_tiet->getChiTiet->tg_bao_quan }}</span></td>
+                                                        <td class="tb-col">
+                                                            <span>{{ $chi_tiet->getChiTiet->tg_bao_quan }}</span>
+                                                        </td>
                                                         <td class="tb-col"><span>{{ $chi_tiet->so_luong }}</span></td>
-                                                        <td class="tb-col"><span>{{ number_format($chi_tiet->gia_xuat, 0, '', '.') }} VNĐ</span></td>
-                                                        <td class="tb-col tb-col-end"><span>{{ number_format($price, 0, '', '.') }} VNĐ</span>
+                                                        <td class="tb-col">
+                                                            <span>{{ number_format($chi_tiet->gia_xuat, 0, '', '.') }}
+                                                                VNĐ</span>
+                                                        </td>
+                                                        <td class="tb-col tb-col-end">
+                                                            <span>{{ number_format($price, 0, '', '.') }} VNĐ</span>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -92,7 +102,8 @@
                                                 <tr>
                                                     <td colspan="6"></td>
                                                     <td colspan="">Tổng:</td>
-                                                    <td class="tb-col tb-col-end">{{ number_format($result, 0, '', ',') }} VNĐ</td>
+                                                    <td class="tb-col tb-col-end">{{ number_format($result, 0, '', ',') }}
+                                                        VNĐ</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
