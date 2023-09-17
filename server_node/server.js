@@ -13,7 +13,7 @@ io.on("connection", (socket) => {
 });
 
 const Redis = require("ioredis");
-const redis = new Redis(1000);
+const redis = new Redis(6379);
 redis.psubscribe("*", (error, count) => {
     //
 });
