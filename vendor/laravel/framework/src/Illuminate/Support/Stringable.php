@@ -254,7 +254,7 @@ class Stringable implements JsonSerializable, ArrayAccess
      *
      * @param  string  $delimiter
      * @param  int  $limit
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection<int, string>
      */
     public function explode($delimiter, $limit = PHP_INT_MAX)
     {
@@ -267,7 +267,7 @@ class Stringable implements JsonSerializable, ArrayAccess
      * @param  string|int  $pattern
      * @param  int  $limit
      * @param  int  $flags
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection<int, string>
      */
     public function split($pattern, $limit = -1, $flags = 0)
     {
@@ -320,6 +320,16 @@ class Stringable implements JsonSerializable, ArrayAccess
     public function isJson()
     {
         return Str::isJson($this->value);
+    }
+
+    /**
+     * Determine if a given value is a valid URL.
+     *
+     * @return bool
+     */
+    public function isUrl()
+    {
+        return Str::isUrl($this->value);
     }
 
     /**
@@ -647,6 +657,18 @@ class Stringable implements JsonSerializable, ArrayAccess
     }
 
     /**
+     * Replace the first occurrence of the given value if it appears at the start of the string.
+     *
+     * @param  string  $search
+     * @param  string  $replace
+     * @return static
+     */
+    public function replaceStart($search, $replace)
+    {
+        return new static(Str::replaceStart($search, $replace, $this->value));
+    }
+
+    /**
      * Replace the last occurrence of a given value in the string.
      *
      * @param  string  $search
@@ -656,6 +678,18 @@ class Stringable implements JsonSerializable, ArrayAccess
     public function replaceLast($search, $replace)
     {
         return new static(Str::replaceLast($search, $replace, $this->value));
+    }
+
+    /**
+     * Replace the last occurrence of a given value if it appears at the end of the string.
+     *
+     * @param  string  $search
+     * @param  string  $replace
+     * @return static
+     */
+    public function replaceEnd($search, $replace)
+    {
+        return new static(Str::replaceEnd($search, $replace, $this->value));
     }
 
     /**
@@ -909,7 +943,7 @@ class Stringable implements JsonSerializable, ArrayAccess
     /**
      * Split a string by uppercase characters.
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection<int, string>
      */
     public function ucsplit()
     {
@@ -1101,6 +1135,19 @@ class Stringable implements JsonSerializable, ArrayAccess
     public function wordCount($characters = null)
     {
         return Str::wordCount($this->value, $characters);
+    }
+
+    /**
+     * Wrap a string to a given number of characters.
+     *
+     * @param  int  $characters
+     * @param  string  $break
+     * @param  bool  $cutLongWords
+     * @return static
+     */
+    public function wordWrap($characters = 75, $break = "\n", $cutLongWords = false)
+    {
+        return new static(Str::wordWrap($this->value, $characters, $break, $cutLongWords));
     }
 
     /**
