@@ -26,6 +26,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     @yield('style')
 </head>
+<script src="//unpkg.com/alpinejs" defer></script>
 
 <style>
     /* Áp dụng CSS cho cột cụ thể */
@@ -39,6 +40,88 @@
         text-overflow: ellipsis;
         /* Hiển thị dấu ba chấm (...) nếu nội dung bị ẩn */
     }
+
+    :root {
+        --primary: #0676ed;
+        --background: #222b45;
+        --warning: #f2a600;
+        --success: #12c99b;
+        --error: #e41749;
+        --dark: #151a30;
+    }
+
+    .alert {
+        min-height: 67px;
+        width: 560px;
+        max-width: 90%;
+        border-radius: 12px;
+        display: flex;
+    }
+
+    .alert-warning {
+        background: var(--warning);
+    }
+
+    .alert-success {
+        background: var(--success);
+    }
+
+    .alert-primary {
+        background: var(--primary);
+    }
+
+    .alert-dark {
+        background: var(--dark);
+    }
+
+    .alert-error {
+        background: var(--error);
+    }
+
+    .alert .icon__wrapper {
+        height: 34px;
+        width: 34px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.253);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .alert .icon__wrapper span {
+        font-size: 21px;
+        color: #fff;
+    }
+
+    .alert p {
+        color: #fff;
+        font-family: Verdana;
+        margin-left: 10px;
+    }
+
+    .alert p a,
+    .alert p a:visited,
+    .alert p a:active {
+        color: #fff;
+    }
+
+    .alert .open {
+        margin-left: auto;
+        margin-right: 5px;
+    }
+
+    .alert .close,
+    .alert .open {
+        color: #fff;
+        transition: transform 0.5s;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .alert .close:hover,
+    .alert .open:hover {
+        transform: scale(1.3);
+    }
 </style>
 
 <body class="nk-body" data-sidebar-collapse="lg" data-navbar-collapse="lg">
@@ -51,7 +134,7 @@
                     @include('parts.header')
 
                     <div class="nk-content">
-
+                        <x-aleart />
                     @endauth
 
                     @yield('content')

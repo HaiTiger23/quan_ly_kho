@@ -1,7 +1,6 @@
 @extends('default')
 
 @section('content')
-
     <div class="nk-content">
         <div class="container">
             <div class="nk-content-inner">
@@ -28,7 +27,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('xuat-kho.create') }}" class="btn btn-primary d-none d-md-inline-flex">
+                                        <a href="{{ route('xuat-kho.create') }}"
+                                            class="btn btn-primary d-none d-md-inline-flex">
                                             <em class="icon ni ni-plus"></em>
                                             <span>Xuất kho</span>
                                         </a>
@@ -45,7 +45,8 @@
                                         <th class="tb-col"><span class="overline-title">STT</span></th>
                                         <th class="tb-col"><span class="overline-title">Mã phiếu</span></th>
                                         <th class="tb-col"><span class="overline-title">Người xuất</span></th>
-                                        <th class="tb-col" data-type="date" data-format="DD-MM-YYYY"><span class="overline-title">Ngày xuất</span></th>
+                                        <th class="tb-col" data-type="date" data-format="DD-MM-YYYY"><span
+                                                class="overline-title">Ngày xuất</span></th>
                                         <th class="tb-col tb-col-end"><span class="overline-title">Hành động</span></th>
                                     </tr>
                                 </thead>
@@ -55,10 +56,12 @@
                                             <td class="tb-col"><span>{{ $key + 1 }}</span></td>
                                             <td class="tb-col"><span>{{ $phieu->ma_phieu_xuat }}</span></td>
                                             <td class="tb-col"><span>{{ $phieu->getUsers->name }}</span></td>
-                                            <td class="tb-col"><span> {{ \Carbon\Carbon::createFromFormat('Y-m-d', $phieu->ngay_xuat)->format('d-m-Y') }}
+                                            <td class="tb-col"><span>
+                                                    {{ \Carbon\Carbon::createFromFormat('Y-m-d', $phieu->ngay_xuat)->format('d-m-Y') }}
                                                 </span></td>
                                             <td class="tb-col tb-col-end">
-                                                <a href="{{ route('xuat-kho.show', $phieu->ma_phieu_xuat) }}" class="btn btn-info btn-sm"><em
+                                                <a href="{{ route('xuat-kho.show', $phieu->ma_phieu_xuat) }}"
+                                                    class="btn btn-info btn-sm"><em
                                                         class="icon ni ni-eye"></em><span>Xem</span></a>
                                             </td>
                                         </tr>
@@ -72,7 +75,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="xuat_excel" data-bs-keyboard="false" tabindex="-1" aria-labelledby="scrollableLabel" aria-hidden="true">
+    <div class="modal fade" id="xuat_excel" data-bs-keyboard="false" tabindex="-1" aria-labelledby="scrollableLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-top">
             <div class="modal-content">
                 <div class="modal-header">
@@ -86,23 +90,24 @@
                             <div class="col-lg-6">
                                 <div class="form-group"><label for="ma_phieu_xuat" class="form-label">Mã phiếu xuất</label>
                                     <div class="form-control-wrap">
-                                        <input type="text" minlength="1" maxlength="255" class="form-control" id="ma_phieu_xuat" value="#{{ $ma_phieu_xuat }}"
-                                            disabled>
+                                        <input type="text" minlength="1" maxlength="255" class="form-control"
+                                            id="ma_phieu_xuat" value="#{{ $ma_phieu_xuat }}" disabled>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group"> <label for="ngay_xuat" class="form-label">Ngày xuất</label>
-                                    <div class="form-control-wrap"> <input placeholder="yyyy/mm/dd" type="date" class="form-control" name="ngay_xuat"
-                                            value="{{ old('ngay_xuat') }}" id="ngay_xuat" required> </div>
+                                    <div class="form-control-wrap"> <input placeholder="yyyy/mm/dd" type="date"
+                                            class="form-control" name="ngay_xuat" value="{{ old('ngay_xuat') }}"
+                                            id="ngay_xuat" required> </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-label">Chi tiết</label>
                                     <div class="form-control-wrap">
-                                        <div class="js-quill" id="quill_editor" value="{!! old('mo_ta') !!}" data-toolbar="minimal"
-                                            data-placeholder="Viết chi tiết sản phẩm vào đây...">
+                                        <div class="js-quill" id="quill_editor" value="{!! old('mo_ta') !!}"
+                                            data-toolbar="minimal" data-placeholder="Viết chi tiết sản phẩm vào đây...">
                                         </div>
                                         <input type="hidden" name="mo_ta">
                                     </div>
@@ -110,7 +115,8 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <div class="input-group"><input type="file" class="form-control" name="excel_file" id="file" required></div>
+                                    <div class="input-group"><input type="file" class="form-control"
+                                            name="excel_file" id="file" required></div>
                                 </div>
                             </div>
                         </div>
