@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ImportCart;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\NhapKho;
@@ -24,6 +25,7 @@ class NhapKhoController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $data = json_decode($request->getContent(), true);
         $validator = Validator::make($data[0], [
             'ma_phieu_nhap' => 'required|max:20|unique:phieu_nhap,ma_phieu_nhap',
@@ -33,9 +35,8 @@ class NhapKhoController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['message'=> 'Có lỗi xảy ra trong quá trình nhập dữ liệu. Vui lòng tải lại trang!']);
+            return response()->json(['message' => 'Có lỗi xảy ra trong quá trình nhập dữ liệu. Vui lòng tải lại trang!']);
         } else {
-
             $phieu_nhap = NhapKho::create([
                 'ma_phieu_nhap' => $data[0]['ma_phieu_nhap'],
                 'ngay_nhap' => $data[0]['ngay_nhap'],
@@ -59,15 +60,13 @@ class NhapKhoController extends Controller
                     ]);
                 }
 
-                return response()->json(['message'=> 'Nhập kho thành công', 'type' => 'success', 'redirect' => route('nhap-kho.index')], 200);
+                return response()->json(['message' => 'Nhập kho thành công', 'type' => 'success', 'redirect' => route('nhap-kho.index')], 200);
             } else {
                 NhapKho::delete($phieu_nhap->id);
                 ChiTietHangHoa::where('ma_phieu_nhap', $phieu_nhap->ma_phieu_nhap)->delete();
-                return response()->json(['message'=> 'Có lỗi xảy ra trong quá trình nhập dữ liệu. Vui lòng kiểm tra và thử lại!']);
+                return response()->json(['message' => 'Có lỗi xảy ra trong quá trình nhập dữ liệu. Vui lòng kiểm tra và thử lại!']);
             }
-
         }
-
     }
 
     /**
@@ -86,7 +85,7 @@ class NhapKhoController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['message'=> 'Có lỗi xảy ra trong quá trình nhập dữ liệu. Vui lòng thử lại!']);
+            return response()->json(['message' => 'Có lỗi xảy ra trong quá trình nhập dữ liệu. Vui lòng thử lại!']);
         } else {
             $hang_hoa = HangHoa::create([
                 'ma_hang_hoa' => $data[0]['ma_hang_hoa'],
@@ -112,5 +111,13 @@ class NhapKhoController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function importCart(Request $request)
+    {
+
+        $sanPham = HangHoa::where('ma_hang_hoa', $request->maSanPham)->first();
+
+        event($event = new ImportCart($sanPham));
     }
 }

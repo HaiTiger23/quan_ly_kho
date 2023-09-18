@@ -187,11 +187,10 @@
                                         <div class="gap-col">
                                             <ul class="d-flex justify-content-end gap g-3">
                                                 <li>
-                                                    <button id="btn-submit" type="submit"
-                                                        class="btn btn-primary d-md-inline-flex">
+                                                    <div id="btn-submit" class="btn btn-primary d-md-inline-flex">
                                                         <em class="icon ni ni-plus"></em>
                                                         <span>Xác nhận</span>
-                                                    </button>
+                                                    </div>
                                                 </li>
                                                 <li style="margin-left: 10px">
                                                     <button id="btn-export" type="submit"
@@ -655,5 +654,36 @@
                 `)
             }
         }
+        $('#btn-submit').on('click', () => {
+            let form = $('#form-create')
+            let formData = form.serialize();
+            $.ajax({
+                method: 'POST',
+                url: '/xuat-kho/tao-phieu',
+                data: formData,
+                success: function() {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '{{ __('Thành công') }}!',
+                        text: '{{ __('Đã thêm bài khảo sát') }}!',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        },
+                    }).then(function() {
+                        window.location = "{{ route('xuat-kho.index') }}";
+                    });
+                },
+                error: function(error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '{{ __('Thất bại') }}',
+                        text: error.responseJSON,
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    });
+                }
+            });
+        })
     </script>
 @endsection
