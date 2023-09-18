@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('nhap-kho')->group(function () {
         Route::get('/', [NhapKhoController::class, 'index'])->name('nhap-kho.index');
         Route::get('/tao-phieu', [NhapKhoController::class, 'create'])->name('nhap-kho.create');
-        Route::post('/tao-phieu', [NhapKhoController::class, 'store'])->name('nhap-kho.store');
+        Route::post('/tao-phieu-n', [NhapKhoController::class, 'store'])->name('nhap-kho.store');
         Route::post('/tao-phieu', [NhapKhoController::class, 'import'])->name('nhap-kho.import');
         Route::get('/xem/{code}', [NhapKhoController::class, 'show'])->name('nhap-kho.show');
     });

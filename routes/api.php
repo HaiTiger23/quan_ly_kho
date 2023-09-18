@@ -28,6 +28,7 @@ Route::get('/xuat-kho/tao-phieu', [XuatKhoController::class, 'search'])->name('a
 
 Route::middleware(['web'])->group(function () {
     Route::get('/xuat-kho/them-san-pham', [App\Http\Controllers\Api\XuatKhoController::class, 'addToCard'])->name('api.xuat-kho.add')->middleware('guest');
+    Route::get('/nhap-kho/them-san-pham', [App\Http\Controllers\Api\NhapKhoController::class, 'importCart'])->name('api.nhap-kho.add')->middleware('guest');
 });
 
 

@@ -124,8 +124,5 @@ class XuatKhoController extends Controller
         $sanPham = HangHoa::where('ma_hang_hoa', $request->maSanPham)->first();
 
         event($event = new AddCart($sanPham));
-
-        // $chat = Chat::create($data);
-        // return redirect()->back();
     }
 }

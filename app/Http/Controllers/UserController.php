@@ -15,7 +15,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:user');
+        $this->middleware('auth');
     }
 
 
@@ -77,22 +77,24 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'dia_chi' => 'max:255',
-            'sdt' => 'nullable|regex:/^(0)[0-9]{9}$/',
-            'change_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ],
-        [
-            'name.required' => 'Tên không được bỏ trống',
-            'name.string' => 'Tên phải là chuỗi',
-            'name.max' => 'Tên không được vượt quá :max ký tự',
-            'dia_chi.max' => 'Địa chỉ không được vượt quá :max ký tự',
-            'sdt.regex' => 'Số điện thoại không đúng định dạng',
-            'change_img.image' => 'Ảnh đại diện phải là hình ảnh',
-            'change_img.mimes' => 'Ảnh đại diện chỉ được chấp nhận các định dạng: :values',
-            'change_img.max' => 'Ảnh đại diện không được vượt quá :max KB',
-        ]);
+        $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'dia_chi' => 'max:255',
+                'sdt' => 'nullable|regex:/^(0)[0-9]{9}$/',
+                'change_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ],
+            [
+                'name.required' => 'Tên không được bỏ trống',
+                'name.string' => 'Tên phải là chuỗi',
+                'name.max' => 'Tên không được vượt quá :max ký tự',
+                'dia_chi.max' => 'Địa chỉ không được vượt quá :max ký tự',
+                'sdt.regex' => 'Số điện thoại không đúng định dạng',
+                'change_img.image' => 'Ảnh đại diện phải là hình ảnh',
+                'change_img.mimes' => 'Ảnh đại diện chỉ được chấp nhận các định dạng: :values',
+                'change_img.max' => 'Ảnh đại diện không được vượt quá :max KB',
+            ]
+        );
 
         $user = auth()->user();
         $file_name = auth()->user()->avatar;
