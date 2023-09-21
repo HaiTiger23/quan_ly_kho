@@ -62,6 +62,7 @@ class HangHoaController extends Controller
             'ten_hang_hoa' => $data['ten_hang_hoa'],
             'id_loai_hang' => $data['id_loai_hang'],
             'don_vi_tinh' => $data['don_vi_tinh'],
+            'gia_ban' => $data['gia_ban'],
             'barcode' => $data['barcode'] <= 0 ? null : $data['barcode'],
             'img' => $file_name,
             'mo_ta' => strlen($mo_ta) == 0 ? 'Không có mô tả cụ thể!' : $mo_ta
@@ -141,6 +142,7 @@ class HangHoaController extends Controller
             'ten_hang_hoa' => $data['ten_hang_hoa'],
             'id_loai_hang' => $data['id_loai_hang'],
             'don_vi_tinh' => $data['don_vi_tinh'],
+            'gia_ban' => $data['gia_ban'],
             'barcode' => $data['barcode'] <= 0 ? null : $data['barcode'],
             'img' => $hang_hoa->img,
             'mo_ta' => strlen($mo_ta) == 0 ? 'Không có mô tả cụ thể!' : $mo_ta

@@ -77,6 +77,18 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label for="barcode" class="form-label">Giá bán</label>
+                                                                <div class="form-control-wrap">
+                                                                    <input type="number" class="form-control" id="gia_ban" name="gia_ban"
+                                                                        value="{{ $hang_hoa->gia_ban }}" placeholder="Giá bán" maxlength="100" required>
+                                                                </div>
+                                                                @if ($errors)
+                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('gia_ban') }}</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
                                                             <div class="form-group"><label class="form-label">Chi
                                                                     tiết</label>
                                                                 <div class="form-control-wrap">

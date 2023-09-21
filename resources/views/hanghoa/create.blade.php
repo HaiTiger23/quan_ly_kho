@@ -81,6 +81,18 @@
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
+                                                                <label for="barcode" class="form-label">Giá bán</label>
+                                                                <div class="form-control-wrap">
+                                                                    <input type="number" class="form-control" id="gia_ban" name="gia_ban"
+                                                                        value="{{ old('gia_ban') }}" placeholder="Giá bán" maxlength="100" required>
+                                                                </div>
+                                                                @if ($errors)
+                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('gia_ban') }}</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
                                                                 <label class="form-label">Mô tả</label>
                                                                 <div class="form-control-wrap">
                                                                     <div class="js-quill" id="quill_editor" value="{!! old('mo_ta') !!}" data-toolbar="minimal"
