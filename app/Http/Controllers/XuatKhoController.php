@@ -93,7 +93,6 @@ class XuatKhoController extends Controller
             return redirect('/xuat-kho')->with('success', 'xuất hóa đơn thành công');
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th);
         }
     }
 

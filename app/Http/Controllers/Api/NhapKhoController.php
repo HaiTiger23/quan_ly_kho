@@ -25,7 +25,6 @@ class NhapKhoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $data = json_decode($request->getContent(), true);
         $validator = Validator::make($data[0], [
             'ma_phieu_nhap' => 'required|max:20|unique:phieu_nhap,ma_phieu_nhap',

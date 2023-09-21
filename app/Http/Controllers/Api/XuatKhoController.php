@@ -125,4 +125,16 @@ class XuatKhoController extends Controller
 
         event($event = new AddCart($sanPham));
     }
+
+    public function saleHistory() {
+        try {
+            $user = auth("sanctum")->user();
+            $saleHistory = XuatKho::where('id_user', $user->id)->get();
+
+            return $this->successResponse('Thành công', $saleHistory);
+        } catch (\Exception $e) {
+            return $this->errorResponse('Xuất hiện lỗi: ' . $e->getMessage());
+        }
+
+    }
 }

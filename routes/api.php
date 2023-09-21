@@ -52,6 +52,7 @@ Route::middleware(['auth:sanctum']) ->group(function() {
         Route::get('/', [HangHoaController::class, 'viewAll'])->name('api.prroduct.viewall');
     });
 
+    Route::post('/sale-history', [XuatKhoController::class, 'saleHistory']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
