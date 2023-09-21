@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('ma_ncc')->references('ma_ncc')->on('nha_cung_cap')->nullOnDelete();
             $table->date('ngay_nhap')->default(now()->toDateString());
             $table->text('mo_ta')->nullable();
-            $table->string('gia_nhap');
             $table->timestamps();
         });
     }

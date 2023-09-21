@@ -131,6 +131,13 @@ class XuatKhoController extends Controller
             $user = auth("sanctum")->user();
             $saleHistory = XuatKho::where('id_user', $user->id)->get();
 
+            foreach($saleHistory as $history) {
+                foreach($history->getChiTiet as $hang_hoa) {
+                    $hang = $hang_hoa->getChiTiet->getHangHoa;
+                    $history['hang_hoa'] = $hang;
+                }
+            }
+
             return $this->successResponse('Thành công', $saleHistory);
         } catch (\Exception $e) {
             return $this->errorResponse('Xuất hiện lỗi: ' . $e->getMessage());

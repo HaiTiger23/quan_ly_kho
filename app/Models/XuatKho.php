@@ -17,4 +17,8 @@ class XuatKho extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function getChiTiet() {
+        return $this->hasMany(ChiTietXuatKho::class, 'ma_phieu_xuat', 'ma_phieu_xuat');
+    }
 }

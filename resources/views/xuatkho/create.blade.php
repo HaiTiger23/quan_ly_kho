@@ -662,7 +662,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: '{{ __('Thành công') }}!',
-                        text: '{{ __('Đã thêm bài khảo sát') }}!',
+                        text: '{{ __('Xuất kho thành công') }}!',
                         customClass: {
                             confirmButton: 'btn btn-success'
                         },
