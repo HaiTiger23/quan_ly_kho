@@ -37,7 +37,7 @@ class HangHoaController extends Controller
                 $so_luong = $chi_tiet_hang_hoa->sum(function ($h) {
                     return $h->so_luong;
                 });
-                $hang_hoa->img = storage_path('images/hanghoa/'.$hang_hoa->img);
+                $hang_hoa->img = asset('images/hanghoa/'.$hang_hoa->img);
                 $hang_hoa->so_luong = $so_luong;
                 $hang_hoa->details = $chi_tiet_hang_hoa;
                 return $this->successResponse("Successfully", $hang_hoa);

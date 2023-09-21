@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     function view() {
-       return $this->successResponse('Successfully', auth('sanctum')->user());
+        $user = auth('sanctum')->user();
+        $user->avatar = asset('storage/images/user/'.$user->avatar);
+        return $this->successResponse('Successfully', $user);
     }
     function update(Request $request ) {
         try {
