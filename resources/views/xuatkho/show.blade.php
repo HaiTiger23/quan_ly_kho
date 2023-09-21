@@ -8,12 +8,11 @@
                     <div class="nk-block-head">
                         <div class="nk-block-head-between flex-wrap gap g-2">
                             <div class="nk-block-head-content">
-                                <h2 class="nk-block-title">Thông tin</h2>
+                                <h2 class="nk-block-title">Thông tin hóa đơn</h2>
                                 <nav>
                                     <ol class="breadcrumb breadcrumb-arrow mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('xuat-kho.index') }}">Quản lý xuất
-                                                kho</a></li>
+                                        <li class="breadcrumb-item"><a href="{{ route('xuat-kho.index') }}">Thanh toán</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">
                                             {{ $phieu_xuat->ma_phieu_xuat }}
                                         </li>
@@ -36,9 +35,9 @@
                                         </ul>
                                     </div>
                                     <div class="nk-invoice-head-item text-sm-end">
-                                        <div class="h3">Mã phiếu xuất: {{ $phieu_xuat->ma_phieu_xuat }}</div>
+                                        <div class="h3">Mã hóa đơn: {{ $phieu_xuat->ma_phieu_xuat }}</div>
                                         <ul>
-                                            <li>Ngày xuất:
+                                            <li>Ngày:
                                                 {{ \Carbon\Carbon::createFromFormat('Y-m-d', $phieu_xuat->ngay_xuat)->format('d-m-Y') }}
                                             </li>
                                         </ul>
@@ -56,7 +55,7 @@
                                                     <th class="tb-col"><span class="overline-title">Bảo quản(tháng)</span>
                                                     </th>
                                                     <th class="tb-col"><span class="overline-title">Số lượng</span></th>
-                                                    <th class="tb-col"><span class="overline-title">Giá xuất</span></th>
+                                                    <th class="tb-col"><span class="overline-title">Giá</span></th>
                                                     <th class="tb-col tb-col-end"><span class="overline-title">Thành
                                                             tiền</span></th>
                                                 </tr>
@@ -100,10 +99,10 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td colspan="6"></td>
-                                                    <td colspan="">Tổng:</td>
-                                                    <td class="tb-col tb-col-end">{{ number_format($result, 0, '', ',') }}
-                                                        VNĐ</td>
+                                                    <td colspan="4"></td>
+                                                    <td colspan="2"><h4>Tổng tiền:</h4></td>
+                                                    <td class="tb-col tb-col-end" colspan="2"><h4>{{ number_format($result, 0, '', ',') }}
+                                                        VNĐ</h4></td>
                                                 </tr>
                                             </tfoot>
                                         </table>

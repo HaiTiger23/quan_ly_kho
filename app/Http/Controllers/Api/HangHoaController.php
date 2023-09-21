@@ -34,10 +34,10 @@ class HangHoaController extends Controller
 
             if ($hang_hoa) {
                 $chi_tiet_hang_hoa = ChiTietHangHoa::where('ma_hang_hoa', $hang_hoa->ma_hang_hoa)->where('id_trang_thai', 3)->get();
-                $tong = $chi_tiet_hang_hoa->sum(function ($h) {
-                    return $h->gia_nhap * $h->so_luong;
+                $so_luong = $chi_tiet_hang_hoa->sum(function ($h) {
+                    return $h->so_luong;
                 });
-                $hang_hoa->tong = $tong;
+                $hang_hoa->so_luong = $so_luong;
                 $hang_hoa->details = $chi_tiet_hang_hoa;
                 return $this->successResponse("Successfully", $hang_hoa);
             }

@@ -15,14 +15,12 @@
                     <div class="nk-block-head">
                         <div class="nk-block-head-between flex-wrap gap g-2">
                             <div class="nk-block-head-content">
-                                <h2 class="nk-block-title">Xuất kho</h2>
+                                <h2 class="nk-block-title">Thanh toán</h2>
                                 <nav>
                                     <ol class="breadcrumb breadcrumb-arrow mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="{{ route('nhap-kho.index') }}">Quản lý xuất
-                                                kho</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Xuất kho</li>
+                                        <li class="breadcrumb-item"><a href="{{ route('nhap-kho.index') }}">Thanh toán</a></li>
                                     </ol>
                                 </nav>
                             </div>
@@ -41,8 +39,7 @@
                                                     <div class="row g-gs">
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <label for="ma_phieu_xuat" class="form-label">Mã phiếu
-                                                                    xuất</label>
+                                                                <label for="ma_phieu_xuat" class="form-label">Mã Hóa đơn</label>
                                                                 <div class="form-control-wrap">
                                                                     <input type="text" minlength="1" maxlength="255"
                                                                         class="form-control" name="ma_phieu_xuat"
@@ -56,7 +53,7 @@
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <label for="ngay_xuat" class="form-label">Ngày xuất</label>
+                                                                <label for="ngay_xuat" class="form-label">Ngày thanh toán</label>
                                                                 <div class="form-control-wrap">
                                                                     <input type="date" class="form-control"
                                                                         name="ngay_xuat" value="{{ old('ngay_xuat') }}"

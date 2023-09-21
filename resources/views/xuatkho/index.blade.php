@@ -8,13 +8,12 @@
                     <div class="nk-block-head">
                         <div class="nk-block-head-between flex-wrap gap g-2">
                             <div class="nk-block-head-content">
-                                <h2 class="nk-block-title">Quản lý xuất kho</h2>
+                                <h2 class="nk-block-title">Thanh toán</h2>
                                 <nav>
                                     <ol class="breadcrumb breadcrumb-arrow mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a>
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page">Quản lý xuất
-                                            kho</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -23,14 +22,14 @@
                                     <li>
                                         <a href="{{ route('xuat-kho.create') }}" class="btn btn-primary btn-md d-md-none">
                                             <em class="icon ni ni-plus"></em>
-                                            <span>Xuất</span>
+                                            <span>Thanh toán</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ route('xuat-kho.create') }}"
                                             class="btn btn-primary d-none d-md-inline-flex">
                                             <em class="icon ni ni-plus"></em>
-                                            <span>Xuất kho</span>
+                                            <span>Thanh toán mới</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -43,10 +42,10 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th class="tb-col"><span class="overline-title">STT</span></th>
-                                        <th class="tb-col"><span class="overline-title">Mã phiếu</span></th>
-                                        <th class="tb-col"><span class="overline-title">Người xuất</span></th>
+                                        <th class="tb-col"><span class="overline-title">Mã hóa đơn</span></th>
+                                        <th class="tb-col"><span class="overline-title">Nhân viên</span></th>
                                         <th class="tb-col" data-type="date" data-format="DD-MM-YYYY"><span
-                                                class="overline-title">Ngày xuất</span></th>
+                                                class="overline-title">Ngày</span></th>
                                         <th class="tb-col tb-col-end"><span class="overline-title">Hành động</span></th>
                                     </tr>
                                 </thead>

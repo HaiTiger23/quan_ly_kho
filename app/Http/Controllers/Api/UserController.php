@@ -18,6 +18,7 @@ class UserController extends Controller
                 'name' => 'required',
                 'date' =>'string|required',
                 'address' =>'required',
+                'sdt' =>'required',
                 'gender' =>'required|string'
             ]);
             $user = auth("sanctum")->user();
@@ -25,6 +26,7 @@ class UserController extends Controller
                 "name" => $request->name,
                 "dia_chi" =>  $request->address,
                 "gioi_tinh" => $request->gender,
+                "sdt" => $request->sdt,
                 "date" => $request->date,
             ]);
             if ($result) {
