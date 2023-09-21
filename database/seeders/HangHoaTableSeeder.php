@@ -19,7 +19,7 @@ class HangHoaTableSeeder extends Seeder
         foreach (range(1, 500) as $index) {
             DB::table('hang_hoa')->insert([
                 'ma_hang_hoa' => 'DTC' . $index,
-                'ten_hang_hoa' => $faker->text(255),
+                'ten_hang_hoa' => $faker->text(20),
                 'mo_ta' => $faker->text,
                 'id_loai_hang' => $faker->numberBetween(1, 50),
                 'don_vi_tinh' => 'sản phẩm',

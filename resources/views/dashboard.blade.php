@@ -93,10 +93,10 @@
                                                 <tr>
                                                     <td class="tb-col">
                                                         <div class="media-group">
-                                                            <div class="media media-md flex-shrink-0 media-middle">
+                                                            <!-- <div class="media media-md flex-shrink-0 media-middle">
                                                                 <img
                                                                     src="{{ asset('storage/images/hanghoa/' . $dt->img) }}">
-                                                            </div>
+                                                            </div> -->
                                                             <div class="media-text">
                                                                 <a href="{{ route('hang-hoa.show', $dt->ma_hang_hoa) }}"
                                                                     class="title">{{ strlen($dt->ten_hang_hoa) > 20 ? substr($dt->ten_hang_hoa, 0, 20) . '...' : substr($dt->ten_hang_hoa, 0, 20) }}</a>
