@@ -52,10 +52,10 @@ class HangHoaController extends Controller
             $products = HangHoa::all();
             foreach ($products as  $product) {
                 $chi_tiet_hang_hoa = ChiTietHangHoa::where('ma_hang_hoa', $product->ma_hang_hoa)->where('id_trang_thai', 3)->get();
-                $tong = $chi_tiet_hang_hoa->sum(function ($h) {
-                    return $h->gia_nhap * $h->so_luong;
+                $so_luong = $chi_tiet_hang_hoa->sum(function ($h) {
+                    return $h->so_luong;
                 });
-                $product->tong = $tong;
+                $product->so_luong = $so_luong;
                 $product->details = $chi_tiet_hang_hoa;
             }
             return $this->successResponse("Successfully", $products);
