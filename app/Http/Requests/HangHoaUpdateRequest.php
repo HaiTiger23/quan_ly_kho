@@ -25,6 +25,7 @@ class HangHoaUpdateRequest extends FormRequest
             'ten_hang_hoa' => 'required|max:255',
             'ma_hang_hoa' => 'required|max:100',
             'id_loai_hang' => 'required|integer',
+            'gia_ban' => 'required|integer',
             'don_vi_tinh' => 'required|max:50',
             'change_img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'barcode' => ['nullable', 'string', 'max:20', 'regex:/^[A-Z0-9]+$/'],

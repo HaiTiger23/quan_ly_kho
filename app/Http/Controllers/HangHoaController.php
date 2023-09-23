@@ -122,6 +122,7 @@ class HangHoaController extends Controller
      */
     public function update(HangHoaUpdateRequest $request, $code)
     {
+
         $data = $request->validated();
 
         $hang_hoa = HangHoa::where('ma_hang_hoa', $code)->firstOrFail();

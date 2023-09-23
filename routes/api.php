@@ -50,6 +50,7 @@ Route::middleware(['auth:sanctum']) ->group(function() {
     Route::prefix('/product')->group(function() {
         Route::post('/', [HangHoaController::class, 'viewFromBarcode'])->name('api.product.view');
         Route::get('/', [HangHoaController::class, 'viewAll'])->name('api.prroduct.viewall');
+        Route::post('/store', [HangHoaController::class, 'store'])->name('api.prroduct.store');
     });
 
     Route::post('/sale-history', [XuatKhoController::class, 'saleHistory']);
