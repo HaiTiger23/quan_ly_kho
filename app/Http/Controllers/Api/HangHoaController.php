@@ -65,5 +65,8 @@ class HangHoaController extends Controller
             return $this->errorResponse("Error", $th->getMessage());
         }
     }
+    function store(Request $request) {
+        return $this->successResponse("Successfully", $request->all());
+    }
 }
 
