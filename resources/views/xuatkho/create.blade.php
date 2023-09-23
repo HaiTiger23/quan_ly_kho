@@ -522,7 +522,9 @@
         integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        var socket = io('http://localhost:6001')
+        const url_socket = `0.tcp.ap.ngrok.io:19554`;
+       var socket = io(url_socket)
+    //    var socket = io('http://localhost:6001')
         socket.on('laravel_database_Cart', (data) => {
             let items = document.querySelectorAll('.item-row');
             let check = true
