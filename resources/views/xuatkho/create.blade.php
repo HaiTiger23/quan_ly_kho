@@ -20,7 +20,8 @@
                                     <ol class="breadcrumb breadcrumb-arrow mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="{{ route('nhap-kho.index') }}">Thanh toán</a></li>
+                                        <li class="breadcrumb-item"><a href="{{ route('nhap-kho.index') }}">Thanh toán</a>
+                                        </li>
                                     </ol>
                                 </nav>
                             </div>
@@ -39,7 +40,8 @@
                                                     <div class="row g-gs">
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <label for="ma_phieu_xuat" class="form-label">Mã Hóa đơn</label>
+                                                                <label for="ma_phieu_xuat" class="form-label">Mã Hóa
+                                                                    đơn</label>
                                                                 <div class="form-control-wrap">
                                                                     <input type="text" minlength="1" maxlength="255"
                                                                         class="form-control" name="ma_phieu_xuat"
@@ -53,7 +55,8 @@
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <label for="ngay_xuat" class="form-label">Ngày thanh toán</label>
+                                                                <label for="ngay_xuat" class="form-label">Ngày thanh
+                                                                    toán</label>
                                                                 <div class="form-control-wrap">
                                                                     <input type="date" class="form-control"
                                                                         name="ngay_xuat" value="{{ old('ngay_xuat') }}"
@@ -125,8 +128,7 @@
 
                                         <div class="gap-col">
                                             <div class="card card-gutter-md">
-                                                <table id="item-table" class="table"
-                                                    data-nk-container="table-responsive">
+                                                <table id="item-table" class="table" data-nk-container="table-responsive">
                                                     <thead class="table-light">
                                                         <tr>
                                                             <th class="tb-col"><span class="overline-title">ID</span></th>
@@ -522,9 +524,10 @@
         integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        const url_socket = `0.tcp.ap.ngrok.io:19554`;
-       var socket = io(url_socket)
-    //    var socket = io('http://localhost:6001')
+        const url_socket = `http://localhost:6001`;
+        // const url_socket = `0.tcp.ap.ngrok.io:19554`;
+        var socket = io(url_socket)
+        //    var socket = io('http://localhost:6001')
         socket.on('laravel_database_Cart', (data) => {
             let items = document.querySelectorAll('.item-row');
             let check = true

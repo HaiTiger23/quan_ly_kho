@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('hang-hoa')->group(function () {
         Route::get('/', [HangHoaController::class, 'index'])->name('hang-hoa.index');
         Route::get('/xem/{code}', [HangHoaController::class, 'show'])->name('hang-hoa.show');
+        Route::get('/in-barcode/{code}', [HangHoaController::class, 'exportBarcode'])->name('hang-hoa.in-barcode');
         Route::get('/xem/{code}?{ma_ncc}', [HangHoaController::class, 'show'])->name('hang-hoa.showInfo');
         Route::get('/them', [HangHoaController::class, 'create'])->name('hang-hoa.create')->middleware('can:user');
         Route::post('/them', [HangHoaController::class, 'store'])->name('hang-hoa.store')->middleware('can:user');

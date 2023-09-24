@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests\HangHoaStoreRequest;
 use App\Http\Requests\HangHoaUpdateRequest;
 use Storage;
+use Milon\Barcode\DNS1D;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
+
 
 class HangHoaController extends Controller
 {
@@ -89,7 +93,7 @@ class HangHoaController extends Controller
 
         if ($hang_hoa) {
             $chi_tiet_hang_hoa = ChiTietHangHoa::where('ma_hang_hoa', $code)->where('id_trang_thai', 3)->paginate(10);
-            $tong = $chi_tiet_hang_hoa->sum(function($h) {
+            $tong = $chi_tiet_hang_hoa->sum(function ($h) {
                 return $h->gia_nhap * $h->so_luong;
             });
             $hang_hoa->tong = $tong;
@@ -153,7 +157,7 @@ class HangHoaController extends Controller
 
         if ($status) {
             if ($request->hasFile('change_img') && $file_name != $request->change_img && $file_name != 'hanghoa.jpg') {
-                unlink(storage_path('app/public/images/hanghoa'.$file_name));
+                unlink(storage_path('app/public/images/hanghoa' . $file_name));
             };
 
             Alert::success('Thành công', 'Sửa thông tin hàng hóa thành công!');
@@ -173,9 +177,15 @@ class HangHoaController extends Controller
         if ($status) {
             Alert::success('Thành công', 'Xóa thông tin hàng hóa thành công!');
             return redirect()->route('hang-hoa.index');
-        } else{
+        } else {
             Alert::error('Thất bại', 'Có lỗi trong quá trình xóa. Xin vui lòng thử lại!')->autoClose(5000);
             return back();
         }
+    }
+
+    public function exportBarcode($id)
+    {
+        $image = '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($id, 'C39+') . '" alt="barcode"   />';
+        echo $image;
     }
 }

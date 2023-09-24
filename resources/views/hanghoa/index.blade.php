@@ -121,6 +121,10 @@
                                                                         href="{{ route('hang-hoa.show', $hang->ma_hang_hoa) }}"><em
                                                                             class="icon ni ni-eye"></em><span>Xem chi
                                                                             tiết</span></a></li>
+                                                                <li><a
+                                                                        href="{{ route('hang-hoa.in-barcode', $hang->ma_hang_hoa) }}"><em
+                                                                            class="icon ni ni-eye"></em><span>In
+                                                                            barcode</span></a></li>
                                                             </ul>
                                                         </div>
                                                     </div>
