@@ -526,8 +526,8 @@
     <script>
         const url_socket = `http://localhost:6001`;
         // const url_socket = `0.tcp.ap.ngrok.io:19554`;
+        //    var socket = io('http://localhost:6001');
         var socket = io(url_socket)
-        //    var socket = io('http://localhost:6001')
         socket.on('laravel_database_Cart', (data) => {
             let items = document.querySelectorAll('.item-row');
             let check = true

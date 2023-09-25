@@ -185,7 +185,7 @@ class HangHoaController extends Controller
 
     public function exportBarcode($id)
     {
-        $image = '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($id, 'C39+') . '" alt="barcode"   />';
-        echo $image;
+        $image = '<img style="width:200px" src="data:image/png;base64,' . DNS1D::getBarcodePNG($id, 'C39+') . '" alt="barcode"   />';
+        return view('barcode.index', compact('image'));
     }
 }
