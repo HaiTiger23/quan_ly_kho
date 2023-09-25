@@ -89,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('tai-khoan')->middleware('can:user')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('tai-khoan.index');
-        Route::get('/them-tai-khoan', [RegisterController::class, 'showRegiserForm'])->name('register');
+        Route::get('/them-tai-khoan', [RegisterController::class, 'showRegistrationForm'])->name('register');
         Route::post('/them-tai-khoan', [RegisterController::class, 'register']);
         Route::put('/{id}', [UserController::class, 'changeRole'])->name('user.changeRole');
         Route::get('/xem/{id}', [UserController::class, 'showUser'])->name('tai-khoan.showUser');
