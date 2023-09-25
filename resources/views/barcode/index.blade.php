@@ -7,10 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Barcode</title>
 </head>
+<style>
+    @media print {
+        .noPrint {
+            display: none;
+        }
+    }
+</style>
 
-<body>
-    <img src="{{ DNS1D::getBarcodePNG($id, 'C128', 3, 33, [1, 1, 1], true) }}" alt="barcode" />
-    {{-- {!! DNS1D::getBarcodeHTML($id, 'C128', 1.4, 22) !!} --}}
+<body style="display: flex; flex-direction: column; row-gap: 10px">
+    {!! $image !!}
+    <button style="width: 100px" onclick="window.print()" class="noPrint">In barcode</button>
 </body>
 
 </html>
