@@ -134,6 +134,7 @@ class XuatKhoController extends Controller
             foreach($saleHistory as $history) {
                 foreach($history->getChiTiet as $hang_hoa) {
                     $hang = $hang_hoa->getChiTiet->getHangHoa;
+                    $hang->img = asset('images/hanghoa/' . $hang->img);
                     $history['hang_hoa'] = $hang;
                 }
             }
