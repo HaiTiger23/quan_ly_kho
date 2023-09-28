@@ -29,7 +29,7 @@
                                         <a href="{{ route('xuat-kho.create') }}"
                                             class="btn btn-primary d-none d-md-inline-flex">
                                             <em class="icon ni ni-plus"></em>
-                                            <span>Thanh toán mới</span>
+                                            <span>Tạo hóa đơn</span>
                                         </a>
                                     </li>
                                 </ul>

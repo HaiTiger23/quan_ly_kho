@@ -15,12 +15,12 @@
                     <div class="nk-block-head">
                         <div class="nk-block-head-between flex-wrap gap g-2">
                             <div class="nk-block-head-content">
-                                <h2 class="nk-block-title">Thanh toán</h2>
+                                <h2 class="nk-block-title">Hóa đơn</h2>
                                 <nav>
                                     <ol class="breadcrumb breadcrumb-arrow mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="{{ route('nhap-kho.index') }}">Thanh toán</a>
+                                        <li class="breadcrumb-item"><a href="{{ route('nhap-kho.index') }}">Hóa đơn</a>
                                         </li>
                                     </ol>
                                 </nav>
@@ -43,9 +43,9 @@
                                                                 <label for="ma_phieu_xuat" class="form-label">Mã Hóa
                                                                     đơn</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" minlength="1" maxlength="255"
-                                                                        class="form-control" name="ma_phieu_xuat"
-                                                                        value="{{ $ma_phieu_xuat }}">
+                                                                    <input disabled type="text" minlength="1"
+                                                                        maxlength="255" class="form-control"
+                                                                        name="ma_phieu_xuat" value="{{ $ma_phieu_xuat }}">
                                                                 </div>
                                                                 @if ($errors)
                                                                     <span
@@ -526,8 +526,8 @@
     <script>
         const url_socket = `http://localhost:6001`;
         // const url_socket = `0.tcp.ap.ngrok.io:19554`;
+        //    var socket = io('http://localhost:6001');
         var socket = io(url_socket)
-        //    var socket = io('http://localhost:6001')
         socket.on('laravel_database_Cart', (data) => {
             let items = document.querySelectorAll('.item-row');
             let check = true
