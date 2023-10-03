@@ -3,7 +3,7 @@
         <div class="nk-sidebar-brand">
             <a href="{{ route('dashboard') }}" class="logo-link">
                 <div class="logo-wrap">
-                    <img class="logo-svg" src="{{ asset('assets/images/favicon.png') }}" alt="">
+                    <img class="logo-svg" src="{{ asset('assets/images/logo-imm.jpg') }}" alt="">
                 </div>
             </a>
             <div class="nk-sidebar-toggle me-n1"><button
@@ -46,7 +46,7 @@
                                 <span class="nk-menu-icon">
                                     <em class="icon ni ni-archive"></em>
                                 </span>
-                                <span class="nk-menu-text">Quản lý nhập kho</span>
+                                <span class="nk-menu-text">Quản lý nhập hàng hóa</span>
                             </a>
                         </li>
 
@@ -55,7 +55,7 @@
                                 <span class="nk-menu-icon">
                                     <em class="icon ni ni-unarchive"></em>
                                 </span>
-                                <span class="nk-menu-text">Quản lý xuất kho</span>
+                                <span class="nk-menu-text">Quản lý hóa đơn</span>
                             </a>
                         </li>
 
