@@ -24,7 +24,8 @@ use App\Http\Controllers\DashboardController;
 Route::post('/nhap-kho/tao-phieu/store', [NhapKhoController::class, 'store'])->name('api.nhap-kho.store');
 Route::post('/nhap-kho/tao-phieu/them-hang', [NhapKhoController::class, 'add'])->name('api.them-hang.add');
 
-Route::post('/xuat-kho/tao-phieu/store', [XuatKhoController::class, 'store'])->name('api.xuat-kho.store');
+Route::post('/tao-phieu', [XuatKhoController::class, 'store'])->name('api.xuat-kho.store');
+// Route::post('/xuat-kho/tao-phieu/store', [XuatKhoController::class, 'store'])->name('api.xuat-kho.store');
 Route::post('/xuat-kho/tao-phieu/export', [XuatKhoController::class, 'export'])->name('api.xuat-kho.export');
 Route::get('/xuat-kho/tao-phieu', [XuatKhoController::class, 'search'])->name('api.xuat-kho.search');
 
@@ -39,15 +40,15 @@ Route::get('/doanh-thu', [DashboardController::class, 'doanhThu'])->name('api.do
 
 //api for application
 Route::post('/login', [AuthController::class, 'login'])->name('api.login');
-Route::middleware(['auth:sanctum']) ->group(function() {
+Route::middleware(['auth:sanctum'])->group(function () {
     //Information
-    Route::prefix('/information')->group(function() {
+    Route::prefix('/information')->group(function () {
         Route::post('/', [UserController::class, 'view'])->name('api.view');
         Route::post('/update', [UserController::class, 'update'])->name('api.update');
         Route::post('/change-password', [UserController::class, 'changePassword'])->name('api.change_password');
     });
     //product
-    Route::prefix('/product')->group(function() {
+    Route::prefix('/product')->group(function () {
         Route::post('/', [HangHoaController::class, 'viewFromBarcode'])->name('api.product.view');
         Route::get('/', [HangHoaController::class, 'viewAll'])->name('api.prroduct.viewall');
         Route::post('/store', [HangHoaController::class, 'store'])->name('api.prroduct.store');

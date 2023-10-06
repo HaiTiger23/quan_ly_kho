@@ -18,8 +18,8 @@
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a>
                                         </li>
                                         <li class="breadcrumb-item"><a href="{{ route('nhap-kho.index') }}">Quản lý nhập
-                                                kho</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Nhập kho</li>
+                                                hàng hóa</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Nhập hàng hóa</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -41,7 +41,7 @@
                                                                     nhập</label>
                                                                 <div class="form-control-wrap">
                                                                     <input style="width:100%" type="text" minlength="1"
-                                                                        maxlength="255" class="form-control"
+                                                                        maxlength="255" class="form-control" disabled
                                                                         name="ma_phieu_nhap" id="ma_phieu_nhap"
                                                                         value="{{ $ma_phieu_nhap }}">
                                                                 </div>
