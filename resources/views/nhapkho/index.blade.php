@@ -15,13 +15,12 @@
                     <div class="nk-block-head">
                         <div class="nk-block-head-between flex-wrap gap g-2">
                             <div class="nk-block-head-content">
-                                <h2 class="nk-block-title">Quản lý nhập kho</h2>
+                                <h2 class="nk-block-title">Quản lý nhập hàng hóa</h2>
                                 <nav>
                                     <ol class="breadcrumb breadcrumb-arrow mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a>
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page">Quản lý nhập
-                                            kho</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Quản lý hàng hóa</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -30,11 +29,12 @@
                                     <li>
                                         <a href="{{ route('nhap-kho.create') }}" class="btn btn-primary d-md-inline-flex">
                                             <em class="icon ni ni-plus"></em>
-                                            <span>Nhập kho</span>
+                                            <span>Nhập hàng hóa</span>
                                         </a>
                                     </li>
                                     <li style="margin-left: 10px">
-                                        <a href="#" class="btn btn-primary d-md-inline-flex" data-bs-toggle="modal" data-bs-target="#nhap_excel">
+                                        <a href="#" class="btn btn-primary d-md-inline-flex" data-bs-toggle="modal"
+                                            data-bs-target="#nhap_excel">
                                             <em class="icon ni ni-file-xls"></em>
                                             <span>Import</span>
                                         </a>
@@ -51,7 +51,8 @@
                                         <th class="tb-col"><span class="overline-title">STT</span></th>
                                         <th class="tb-col"><span class="overline-title">Mã phiếu</span></th>
                                         <th class="tb-col"><span class="overline-title">Người nhập</span></th>
-                                        <th class="tb-col" data-type="date" data-format="DD-MM-YYYY"><span class="overline-title">Ngày nhập</span></th>
+                                        <th class="tb-col" data-type="date" data-format="DD-MM-YYYY"><span
+                                                class="overline-title">Ngày nhập</span></th>
                                         <th class="tb-col tb-col-end"><span class="overline-title">Hành động</span></th>
                                     </tr>
                                 </thead>
@@ -61,10 +62,12 @@
                                             <td class="tb-col"><span>{{ $key + 1 }}</span></td>
                                             <td class="tb-col"><span>{{ $phieu->ma_phieu_nhap }}</span></td>
                                             <td class="tb-col"><span>{{ $phieu->getUsers->name }}</span></td>
-                                            <td class="tb-col"><span> {{ \Carbon\Carbon::createFromFormat('Y-m-d', $phieu->ngay_nhap)->format('d-m-Y') }}
+                                            <td class="tb-col"><span>
+                                                    {{ \Carbon\Carbon::createFromFormat('Y-m-d', $phieu->ngay_nhap)->format('d-m-Y') }}
                                                 </span></td>
                                             <td class="tb-col tb-col-end">
-                                                <a href="{{ route('nhap-kho.show', $phieu->ma_phieu_nhap) }}" class="btn btn-info btn-sm"><em
+                                                <a href="{{ route('nhap-kho.show', $phieu->ma_phieu_nhap) }}"
+                                                    class="btn btn-info btn-sm"><em
                                                         class="icon ni ni-eye"></em><span>Xem</span></a>
                                             </td>
                                         </tr>
@@ -78,7 +81,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="nhap_excel" data-bs-keyboard="false" tabindex="-1" aria-labelledby="scrollableLabel" aria-hidden="true">
+    <div class="modal fade" id="nhap_excel" data-bs-keyboard="false" tabindex="-1" aria-labelledby="scrollableLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-top">
             <div class="modal-content">
                 <div class="modal-header">
@@ -92,21 +96,23 @@
                             <div class="col-lg-6">
                                 <div class="form-group"><label for="ma_phieu_nhap" class="form-label">Mã phiếu nhập</label>
                                     <div class="form-control-wrap">
-                                        <input type="text" minlength="1" maxlength="255" class="form-control" id="ma_phieu_nhap" value="#{{ $ma_phieu_nhap }}"
-                                            disabled>
+                                        <input type="text" minlength="1" maxlength="255" class="form-control"
+                                            id="ma_phieu_nhap" value="#{{ $ma_phieu_nhap }}" disabled>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group"> <label for="ngay_nhap" class="form-label">Ngày nhập</label>
-                                    <div class="form-control-wrap"> <input placeholder="yyyy/mm/dd" type="date" class="form-control" name="ngay_nhap"
-                                            value="{{ old('ngay_nhap') }}" id="ngay_nhap" required> </div>
+                                    <div class="form-control-wrap"> <input placeholder="yyyy/mm/dd" type="date"
+                                            class="form-control" name="ngay_nhap" value="{{ old('ngay_nhap') }}"
+                                            id="ngay_nhap" required> </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group"> <label for="ma_ncc" class="form-label">Nhà cung cấp</label>
                                     <div class="form-control-wrap">
-                                        <select class="js-select" data-search="true" data-sort="false" name="ma_ncc" id="ma_ncc">
+                                        <select class="js-select" data-search="true" data-sort="false" name="ma_ncc"
+                                            id="ma_ncc">
                                             <option value="">Nhà cung cấp</option>
                                             @foreach ($nha_cung_cap as $ncc)
                                                 <option value="{{ $ncc->ma_ncc }}">{{ $ncc->ten_ncc }}</option>
@@ -119,8 +125,8 @@
                                 <div class="form-group">
                                     <label class="form-label">Chi tiết</label>
                                     <div class="form-control-wrap">
-                                        <div class="js-quill" id="quill_editor" value="{!! old('mo_ta') !!}" data-toolbar="minimal"
-                                            data-placeholder="Viết chi tiết sản phẩm vào đây...">
+                                        <div class="js-quill" id="quill_editor" value="{!! old('mo_ta') !!}"
+                                            data-toolbar="minimal" data-placeholder="Viết chi tiết sản phẩm vào đây...">
                                         </div>
                                         <input type="hidden" name="mo_ta">
                                     </div>
@@ -128,7 +134,8 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <div class="input-group"><input type="file" class="form-control" name="excel_file" id="file" required></div>
+                                    <div class="input-group"><input type="file" class="form-control"
+                                            name="excel_file" id="file" required></div>
                                 </div>
                             </div>
                         </div>

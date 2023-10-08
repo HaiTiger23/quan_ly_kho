@@ -61,7 +61,6 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('xuat-kho')->group(function () {
         Route::get('/', [XuatKhoController::class, 'index'])->name('xuat-kho.index');
         Route::get('/tao-phieu', [XuatKhoController::class, 'create'])->name('xuat-kho.create');
-        Route::post('/tao-phieu', [XuatKhoController::class, 'store'])->name('xuat-kho.store');
         Route::post('/tao-phieu-excel', [XuatKhoController::class, 'export'])->name('xuat-kho.export');
         Route::get('/download-excel', [XuatKhoController::class, 'download'])->name('xuat-kho.download');
         Route::get('/xem/{code}', [XuatKhoController::class, 'show'])->name('xuat-kho.show');

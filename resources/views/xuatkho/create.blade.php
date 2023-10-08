@@ -145,37 +145,7 @@
                                                     </thead>
 
                                                     <tbody id="tableChiTietXuat">
-                                                        {{-- item --}}
-                                                        {{-- <tr class="item-row mb-4">
-                                                            <td class="tb-col">
-                                                                <div class="form-control-wrap d-flex">
-                                                                    1.
-                                                                </div>
-                                                            </td>
-                                                            <td class="tb-col">
-                                                                <div class="form-control-wrap d-flex">
-                                                                    <input style="width:100%" list="ma_hang_hoa"
-                                                                        name="ma_hang_hoa[]" class="form-control">
-
-                                                                </div>
-                                                            </td>
-                                                            <td class="tb-col">
-                                                                <div class="form-control-wrap"><input style="width:100%"
-                                                                        type="number" min="1" max="1000000000"
-                                                                        class="form-control" name="so_luong[]" required />
-                                                                </div>
-                                                            </td>
-                                                            <td class="tb-col">
-                                                                <div class="form-control-wrap"><input style="width:100%"
-                                                                        type="number" min="1" max="1000000000"
-                                                                        class="form-control" name="gia_nhap[]" required />
-                                                                </div>
-                                                            </td>
-                                                            <td class="tb-col tb-col-end text-center"><button
-                                                                    type="button"
-                                                                    class="btn btn-danger btn-sm remove-item">Xóa</button>
-                                                            </td>
-                                                        </tr> --}}
+                                                        {{-- chi tiết phiếu xuất --}}
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -188,14 +158,13 @@
                                                 <li>
                                                     <div id="btn-submit" class="btn btn-primary d-md-inline-flex">
                                                         <em class="icon ni ni-plus"></em>
-                                                        <span>Xác nhận</span>
+                                                        <span>Hoàn thành</span>
                                                     </div>
                                                 </li>
                                                 <li style="margin-left: 10px">
-                                                    <button id="btn-export" type="submit"
-                                                        class="btn btn-primary d-md-inline-flex">
+                                                    <button id="btn-export" class="btn btn-primary d-md-inline-flex">
                                                         <em class="icon ni ni-file-download"></em>
-                                                        <span>Export</span>
+                                                        <span>Xuất hóa đơn</span>
                                                     </button>
                                                 </li>
                                             </ul>
@@ -250,7 +219,9 @@
                                                             $so_luong += $value->so_luong;
                                                         }
                                                     @endphp
-                                                    <td class="tb-col"><span>{{ $so_luong }}</span></td>
+                                                    {{-- <input type="hidden" class="so_luong" value="{{ $so_luong }}"> --}}
+                                                    <td class="tb-col"><span>{{ $so_luong }}</span>
+                                                    </td>
                                                     <td class="tb-col"><span>{{ $hang->don_vi_tinh }}</span></td>
                                                     <td class="tb-col">
                                                         <span>{{ strlen($hang->getLoaiHang->ten_loai_hang) > 15 ? substr($hang->getLoaiHang->ten_loai_hang, 0, 15) . '...' : substr($hang->getLoaiHang->ten_loai_hang, 0, 15) }}</span>
@@ -265,8 +236,9 @@
                                                         <span>{{ number_format($hang->gia_ban) }} VND</span>
                                                     </td>
                                                     <td class="tb-col tb-col-end text-center">
-                                                        <div class="btn btn-primary btn-sm" onclick="addItem(this)"
-                                                            data-index="{{ $hang->ma_hang_hoa }}">Thêm</div>
+                                                        <button {{ $so_luong < 1 ? 'disabled' : '' }}
+                                                            class="btn btn-primary btn-sm" onclick="addItem(this)"
+                                                            data-index="{{ $hang->ma_hang_hoa }}">Thêm</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -297,229 +269,6 @@
         integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script>
-        $(document).ready(function() {
-            const formCreate = document.getElementById('form-create')
-            const inNum = document.querySelectorAll('input[type="number"]');
-            const quill = new Quill('#quill_editor', {
-                theme: 'snow'
-            });
-            let selectedValues = []
-
-            inNum.forEach(e => {
-                e.addEventListener('input', function() {
-                    if (this.value < 0) {
-                        this.value = 0;
-                    } else if (this.value > parseInt(e.getAttribute('max'))) {
-                        this.value = parseInt(e.getAttribute('max'));
-                    }
-                });
-            });
-
-            $('#searchInput').autocomplete({
-                source: function(request, response) {
-                    $.ajax({
-                        url: "{{ route('api.xuat-kho.search') }}",
-                        data: {
-                            searchInput: request.term, // dữ liệu nhập vào
-                            selectedValues: selectedValues
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            console.log(data)
-                            response(
-                                $.map(data, function(item) {
-                                    return {
-                                        id: item.id,
-                                        so_luong: item.so_luong,
-                                        gia_nhap: item.gia_nhap,
-                                        ngay_san_xuat: item.ngay_san_xuat,
-                                        tg_bao_quan: item.tg_bao_quan,
-                                        ma_hang_hoa: item.get_hang_hoa.ma_hang_hoa,
-                                        ten_hang_hoa: item.get_hang_hoa
-                                            .ten_hang_hoa,
-                                        don_vi_tinh: item.get_hang_hoa.don_vi_tinh,
-                                        hang_hoa: item
-                                    }
-                                })
-                            );
-                        }
-                    });
-                },
-                minLength: 1,
-                select: function(event, ui) {
-                    let hang_hoa = ui.item.hang_hoa
-                    selectedValues.push(hang_hoa.id)
-
-                    const htmls = `<tr>
-                                    <input type="hidden" class="hang-hoa" value="${hang_hoa.id}">
-                                    <td class="tb-col"><span>${hang_hoa.ma_hang_hoa}</span></td>
-                                    <td class="tb-col"><span>${hang_hoa.get_hang_hoa.ten_hang_hoa}</span></td>
-                                    <td class="tb-col"><span>${hang_hoa.get_hang_hoa.don_vi_tinh}</span></td>
-                                    <td class="tb-col"><span>${hang_hoa.so_luong}</span></td>
-                                    <td class="tb-col"><input style="width:100%;" type="number" min="0" max="${hang_hoa.so_luong}" class="so-luong"></td>
-                                    <td class="tb-col"><input style="width:80%" type="number" min="0" class="gia">  VNĐ</td>
-                                    <td class="tb-col"><span class="thanh-tien"> 0 VNĐ</span></td>
-                                    <td class="tb-col tb-col-end"><button type="button" class="btn-delete btn btn-danger">Xóa</button></td>
-                                </tr>`
-
-                    const $htmls = $(htmls);
-                    const $soLuong = $htmls.find('.so-luong');
-                    const $gia = $htmls.find('.gia');
-                    const $thanhTien = $htmls.find('.thanh-tien');
-                    const btnXoa = $htmls.find('.btn-delete');
-
-                    btnXoa.on('click', function() {
-                        const $row = $(this).closest('tr');
-                        $row.remove();
-                        selectedValues = selectedValues.filter(function(id) {
-                            return id !== hang_hoa.id;
-                        });
-                    });
-
-                    $soLuong.on('input', function() {
-                        if (this.value <= 0) {
-                            this.value = '';
-                        } else if (this.value > parseInt($soLuong.attr('max'))) {
-                            this.value = parseInt($soLuong.attr('max'));
-                        }
-                    });
-
-                    $soLuong.on('keyup', function() {
-                        if ($soLuong.val() > 0 && $gia.val() > 0) {
-                            let tongTien = $soLuong.val() * $gia.val();
-                            $thanhTien.html(
-                                `<span>${new Intl.NumberFormat('vi-VN', { maximumSignificantDigits: 3 }).format(tongTien)} VNĐ</span>`
-                            );
-                        } else {
-                            $thanhTien.html(`<span>0 VNĐ</span>`);
-                        }
-                    });
-
-                    $gia.on('keyup', function() {
-                        if ($soLuong.val() > 0 && $gia.val() > 0) {
-                            let tongTien = $soLuong.val() * $gia.val();
-                            $thanhTien.html(
-                                `<span>${new Intl.NumberFormat('vi-VN', { maximumSignificantDigits: 3 }).format(tongTien)} VNĐ</span>`
-                            );
-                        } else {
-                            $thanhTien.html(`<span>0 VNĐ</span>`);
-                        }
-                    });
-
-                    $('tbody').append($htmls)
-                }
-            }).autocomplete("instance")._renderItem = function(ul, item) {
-                return $("<li>")
-                    .append(`
-                            <div>
-                                MHH: ${item.ten_hang_hoa} - Tên: ${item.ma_hang_hoa} - SL: ${item.so_luong} - Giá: ${item.gia_nhap}
-                                - NSX: ${item.ngay_san_xuat} - TGBQ: ${item.tg_bao_quan}
-                            </div>
-                        `)
-                    .appendTo(ul);
-            };
-
-            const btnSubmit = document.getElementById('btn-submit')
-            const btnExport = document.getElementById('btn-export')
-            let apiUrl = ''
-
-            btnSubmit.onclick = function() {
-                apiUrl = '{{ route('api.xuat-kho.store') }}'
-            }
-
-            btnExport.onclick = function() {
-                apiUrl = '{{ route('xuat-kho.export') }}'
-            }
-
-
-            formCreate.onsubmit = function(e) {
-                e.preventDefault()
-                const ma_phieu_xuat = $('input[name="ma_phieu_xuat"]').val()
-                const ngay_xuat = $('input[name="ngay_xuat"]').val()
-                const khach_hang = $('input[name="khach_hang"]').val()
-                const dia_chi = $('input[name="dia_chi"]').val()
-                const mo_ta = quill.getContents().ops[0].insert
-                const id_user = {{ auth()->user()->id }}
-                console.log(mo_ta);
-
-                let data = [{
-                    ma_phieu_xuat: ma_phieu_xuat,
-                    ngay_xuat: ngay_xuat,
-                    khach_hang: khach_hang,
-                    dia_chi: dia_chi,
-                    mo_ta: mo_ta === "\n" ? '' : mo_ta,
-                    id_user: id_user
-                }]
-
-                $('tbody tr').each(function() {
-                    const item = {
-                        id_chi_tiet_hang_hoa: $(this).find('.hang-hoa').val(),
-                        so_luong: $(this).find('.so-luong').val(),
-                        gia_xuat: $(this).find('.gia').val()
-                    }
-                    data.push(item);
-                });
-
-                const token = '{{ csrf_token() }}'
-
-                $.ajax({
-                    type: 'POST',
-                    url: apiUrl,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': token
-                    },
-                    data: JSON.stringify(data),
-                    success: function(response) {
-                        if (response.type === 'success') {
-                            Swal.fire({
-                                title: 'Thành công!',
-                                text: response.message,
-                            });
-                            setTimeout(() => {
-                                window.location.href = response.redirect;
-                            }, 3000);
-                        } else if (response.type === 'export') {
-                            Swal.fire({
-                                title: 'Thành công!',
-                                text: response.message,
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#fc0303',
-                                confirmButtonText: 'OK',
-                                cancelButtonText: 'Đóng'
-                            }).then((result) => {
-                                if (result.value) {
-                                    let downloadLink = document.createElement("a");
-                                    downloadLink.href = response.downloadUrl;
-                                    document.body.appendChild(downloadLink);
-                                    downloadLink.click();
-                                    document.body.removeChild(downloadLink);
-                                }
-                            }).catch((error) => {
-                                console.log(error);
-                            });
-                        }
-                    },
-                    error: function(response) {
-                        var errors = response.responseJSON.errors;
-                        var errorText = '';
-
-                        $.each(errors, function(index, error) {
-                            $.each(error, function(key, value) {
-                                errorText += value + "\n";
-                            })
-                        })
-
-                        alert(errorText);
-                    }
-                });
-
-                return true
-            }
-        });
-    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"
         integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -565,7 +314,7 @@
                     </td>
                     <td class="tb-col">
                         <div class="form-control-wrap"><input style="width:100%"
-                                type="number" min="1" max="1000000000"
+                                type="number" min="1" max="${data.data.sanPham.so_luong}"
                                 class="form-control soLuong" name="so_luong[]" required  value="1"/>
                         </div>
                     </td>
@@ -617,7 +366,8 @@
                     idHang: item.querySelector('.idHang').value,
                     tenHangHoa: item.querySelector('.tenHangHoa').value,
                     giaBan: item.querySelector('.giaBan').value,
-                    soluong: 1
+                    soluong: 1,
+                    tongSL: item.querySelector('.so_luong').value
                 }
 
                 let gia_ban = new Intl.NumberFormat('en-IN', {
@@ -646,7 +396,7 @@
                     </td>
                     <td class="tb-col">
                         <div class="form-control-wrap"><input style="width:100%"
-                                type="number" min="1" max="1000000000"
+                                type="number" min="1" max="${itemData.tongSL}"
                                 class="form-control soLuong" name="so_luong[]" required  value="1"/>
                         </div>
                     </td>
@@ -661,7 +411,7 @@
             let formData = form.serialize();
             $.ajax({
                 method: 'POST',
-                url: '/xuat-kho/tao-phieu',
+                url: '{{ route('api.xuat-kho.store') }}',
                 data: formData,
                 success: function() {
                     Swal.fire({
