@@ -22,7 +22,8 @@
                         </div>
                     </div>
                     <div class="nk-block">
-                        <form action="{{ route('hang-hoa.store') }}" method="POST" enctype="multipart/form-data" id="form-create">
+                        <form action="{{ route('hang-hoa.store') }}" method="POST" enctype="multipart/form-data"
+                            id="form-create">
                             @csrf
                             <div class="row g-gs">
                                 <div class="col-xxl-9">
@@ -33,37 +34,49 @@
                                                     <div class="row g-gs">
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <label for="ma_hang_hoa" class="form-label">Mã hàng hóa</label>
+                                                                <label for="ma_hang_hoa" class="form-label">Mã hàng
+                                                                    hóa</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" id="ma_hang_hoa" name="ma_hang_hoa"
-                                                                        value="{{ old('ma_hang_hoa') }}" placeholder="Mã hàng hóa"  maxlength="100">
+                                                                    <input type="text" class="form-control"
+                                                                        id="ma_hang_hoa" name="ma_hang_hoa"
+                                                                        value="{{ old('ma_hang_hoa') }}"
+                                                                        placeholder="Mã hàng hóa" maxlength="100">
                                                                 </div>
                                                                 @if ($errors)
-                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('ma_hang_hoa') }}</span>
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('ma_hang_hoa') }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <label for="ten_hang_hoa" class="form-label">Tên hàng hóa</label>
+                                                                <label for="ten_hang_hoa" class="form-label">Tên hàng
+                                                                    hóa</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" id="ten_hang_hoa" name="ten_hang_hoa"
-                                                                        value="{{ old('ten_hang_hoa') }}" placeholder="Tên hàng hóa"  maxlength="255">
+                                                                    <input type="text" class="form-control"
+                                                                        id="ten_hang_hoa" name="ten_hang_hoa"
+                                                                        value="{{ old('ten_hang_hoa') }}"
+                                                                        placeholder="Tên hàng hóa" maxlength="255">
                                                                 </div>
                                                                 @if ($errors)
-                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('ten_hang_hoa') }}</span>
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('ten_hang_hoa') }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <label for="don_vi_tinh" class="form-label"> Đơn vị tính</label>
+                                                                <label for="don_vi_tinh" class="form-label"> Đơn vị
+                                                                    tính</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" id="don_vi_tinh" name="don_vi_tinh"
-                                                                        value="{{ old('don_vi_tinh') }}" placeholder="Đơn vị tính"  maxlength="50">
+                                                                    <input type="text" class="form-control"
+                                                                        id="don_vi_tinh" name="don_vi_tinh"
+                                                                        value="{{ old('don_vi_tinh') }}"
+                                                                        placeholder="Đơn vị tính" maxlength="50">
                                                                 </div>
                                                                 @if ($errors)
-                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('don_vi_tinh') }}</span>
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('don_vi_tinh') }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -71,11 +84,14 @@
                                                             <div class="form-group">
                                                                 <label for="barcode" class="form-label">Barcode</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" id="barcode" name="barcode"
-                                                                        value="{{ old('barcode') }}" placeholder="Barcode" maxlength="100">
+                                                                    <input type="text" class="form-control"
+                                                                        id="barcode" name="barcode"
+                                                                        value="{{ old('barcode') }}" placeholder="Barcode"
+                                                                        maxlength="100">
                                                                 </div>
                                                                 @if ($errors)
-                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('barcode') }}</span>
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('barcode') }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -83,11 +99,14 @@
                                                             <div class="form-group">
                                                                 <label for="barcode" class="form-label">Giá bán</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="number" class="form-control" id="gia_ban" name="gia_ban"
-                                                                        value="{{ old('gia_ban') }}" placeholder="Giá bán" maxlength="100" required>
+                                                                    <input type="number" class="form-control"
+                                                                        id="gia_ban" name="gia_ban"
+                                                                        value="{{ old('gia_ban') }}" placeholder="Giá bán"
+                                                                        maxlength="100">
                                                                 </div>
                                                                 @if ($errors)
-                                                                    <span class="text-danger py-1 mt-2">{{ $errors->first('gia_ban') }}</span>
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('gia_ban') }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -95,7 +114,9 @@
                                                             <div class="form-group">
                                                                 <label class="form-label">Mô tả</label>
                                                                 <div class="form-control-wrap">
-                                                                    <div class="js-quill" id="quill_editor" value="{!! old('mo_ta') !!}" data-toolbar="minimal"
+                                                                    <div class="js-quill" id="quill_editor"
+                                                                        value="{!! old('mo_ta') !!}"
+                                                                        data-toolbar="minimal"
                                                                         data-placeholder="Viết chi tiết sản phẩm vào đây...">
                                                                     </div>
                                                                     <input type="hidden" name="mo_ta">
@@ -116,20 +137,25 @@
                                                 <div class="col-12">
                                                     <div class="form-group"><label class="form-label">Ảnh bìa</label>
                                                         <div class="form-control-wrap">
-                                                            <div class="image-upload-wrap d-flex flex-column align-items-center">
+                                                            <div
+                                                                class="image-upload-wrap d-flex flex-column align-items-center">
                                                                 <div class="media media-huge border">
                                                                     <img id="img" class="w-100 h-100"
-                                                                        src="{{ asset('storage/images/hanghoa/hanghoa.jpg') }}" alt="img">
+                                                                        src="{{ asset('storage/images/hanghoa/hanghoa.jpg') }}"
+                                                                        alt="img">
                                                                 </div>
                                                                 <div class="pt-3">
-                                                                    <input class="upload-image" data-target="img" id="change-img" name="change_img"
-                                                                        type="file" max="1" hidden>
-                                                                    <label for="change-img" class="btn btn-md btn-primary">Thay đổi</label>
+                                                                    <input class="upload-image" data-target="img"
+                                                                        id="change-img" name="change_img" type="file"
+                                                                        max="1" hidden>
+                                                                    <label for="change-img"
+                                                                        class="btn btn-md btn-primary">Thay đổi</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         @if ($errors)
-                                                            <span class="text-danger py-1 mt-2">{{ $errors->first('change_img') }}</span>
+                                                            <span
+                                                                class="text-danger py-1 mt-2">{{ $errors->first('change_img') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -137,16 +163,19 @@
                                                     <div class="form-group">
                                                         <label class="form-label">Loại hàng hóa</label>
                                                         <div class="form-control-wrap">
-                                                            <select class="js-select" name="id_loai_hang" data-search="true" data-sort="false">
+                                                            <select class="js-select" name="id_loai_hang"
+                                                                data-search="true" data-sort="false">
                                                                 <option value="">Loại hàng hóa</option>
                                                                 @foreach ($loai_hang as $loai)
                                                                     <option value="{{ $loai->id }}"
-                                                                        {{ old('id_loai_hang') == $loai->id ? 'selected' : '' }}>{{ $loai->ten_loai_hang }}</option>
+                                                                        {{ old('id_loai_hang') == $loai->id ? 'selected' : '' }}>
+                                                                        {{ $loai->ten_loai_hang }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                         @if ($errors)
-                                                            <span class="text-danger py-1 mt-2">{{ $errors->first('id_loai_hang') }}</span>
+                                                            <span
+                                                                class="text-danger py-1 mt-2">{{ $errors->first('id_loai_hang') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>

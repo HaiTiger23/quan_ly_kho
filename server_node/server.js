@@ -1,8 +1,8 @@
 const httpServer = require("http").createServer();
 let io = require("socket.io")(httpServer, {
     cors: {
-        origin: "http://127.0.0.1:8000",
-        methods: ["GET", "POST"],
+        origin: "*",
+        // methods: ["GET", "POST"],
     },
 });
 io.listen(6001);
@@ -13,7 +13,7 @@ io.on("connection", (socket) => {
 });
 
 const Redis = require("ioredis");
-const redis = new Redis(1000);
+const redis = new Redis(6379);
 redis.psubscribe("*", (error, count) => {
     //
 });
