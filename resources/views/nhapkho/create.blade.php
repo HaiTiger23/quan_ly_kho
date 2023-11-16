@@ -175,6 +175,41 @@
                                                                         class="btn btn-danger btn-sm remove-item">Xóa</button>
                                                                 </td>
                                                             </tr>
+                                                             <template id="hang-hoa-template">
+                                                            <tr class="item-row">
+                                                                <td class="tb-col">
+                                                                    <div class="form-control-wrap d-flex">
+                                                                        <input style="width:80%" list="ma_hang_hoa" name="ma_hang_hoa[]" class="form-control">
+                                                                        <button class="btn btn-light" type="button" data-bs-toggle="modal"
+                                                                            data-bs-target="#them-hang">
+                                                                            <em class="icon ni ni-plus-circle"></em>
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="tb-col">
+                                                                    <div class="form-control-wrap">
+                                                                        <input style="width:100%" type="number" min="1" max="1000000000"
+                                                                            class="form-control" name="so_luong[]" required />
+                                                                    </div>
+                                                                </td>
+                                                                <td class="tb-col">
+                                                                    <div class="form-control-wrap"><input style="width:100%" type="number" min="1"
+                                                                            max="1000000000" class="form-control" name="gia_nhap[]" required /></div>
+                                                                </td>
+                                                                <td class="tb-col">
+                                                                    <div class="form-control-wrap"><input style="width:100%" placeholder="dd/mm/yyyy"
+                                                                            type="date" class="form-control" name="ngay_san_xuat[]" required>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="tb-col">
+                                                                    <div class="form-control-wrap"><input style="width:100%" type="number" min="1"
+                                                                            max="1000000000" class="form-control" name="tg_bao_quan[]" required /></div>
+                                                                </td>
+                                                                <td class="tb-col tb-col-end text-center">
+                                                                    <button type="button" class="btn btn-danger btn-sm remove-item">Xóa</button>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
                                                         </tbody>
                                                     </div>
                                                 </table>

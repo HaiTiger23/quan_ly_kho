@@ -161,12 +161,6 @@
                                                         <span>Hoàn thành</span>
                                                     </div>
                                                 </li>
-                                                <li style="margin-left: 10px">
-                                                    <button id="btn-export" class="btn btn-primary d-md-inline-flex">
-                                                        <em class="icon ni ni-file-download"></em>
-                                                        <span>Xuất hóa đơn</span>
-                                                    </button>
-                                                </li>
                                             </ul>
                                         </div>
                                     </div>
