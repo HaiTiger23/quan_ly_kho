@@ -156,8 +156,7 @@ class HangHoaController extends Controller
         if ($status) {
             if ($request->hasFile('change_img') && $file_name != $request->change_img && $file_name != 'hanghoa.jpg') {
                 unlink(storage_path('app/public/images/hanghoa' . $file_name));
-            }
-            ;
+            };
 
             Alert::success('Thành công', 'Sửa thông tin hàng hóa thành công!');
             return redirect()->route('hang-hoa.index');
@@ -172,7 +171,17 @@ class HangHoaController extends Controller
      */
     public function destroy($id)
     {
-        $status = HangHoa::destroy($id);
+        $hang_hoa = HangHoa::find($id);
+        $so_luong = 0;
+        foreach ($hang_hoa->getChiTiet as $value) {
+            $so_luong += $value->so_luong;
+        }
+        if ($so_luong) {
+            Alert::error('Thất bại', 'Bạn không thể xóa khi còn hàng tồn kho!')->autoClose(5000);
+            return back();
+        }
+
+        $status = $hang_hoa->delete();
         if ($status) {
             Alert::success('Thành công', 'Xóa thông tin hàng hóa thành công!');
             return redirect()->route('hang-hoa.index');
