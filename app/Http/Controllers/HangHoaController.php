@@ -126,9 +126,7 @@ class HangHoaController extends Controller
      */
     public function update(HangHoaUpdateRequest $request, $code)
     {
-
         $data = $request->validated();
-
         $hang_hoa = HangHoa::where('ma_hang_hoa', $code)->firstOrFail();
         $file_name = $hang_hoa->img;
 
@@ -158,7 +156,8 @@ class HangHoaController extends Controller
         if ($status) {
             if ($request->hasFile('change_img') && $file_name != $request->change_img && $file_name != 'hanghoa.jpg') {
                 unlink(storage_path('app/public/images/hanghoa' . $file_name));
-            };
+            }
+            ;
 
             Alert::success('Thành công', 'Sửa thông tin hàng hóa thành công!');
             return redirect()->route('hang-hoa.index');

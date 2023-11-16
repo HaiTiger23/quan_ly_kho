@@ -43,7 +43,7 @@
                                                                 <label for="ma_phieu_xuat" class="form-label">Mã Hóa
                                                                     đơn</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input disabled type="text" minlength="1"
+                                                                    <input  type="text" minlength="1"
                                                                         maxlength="255" class="form-control"
                                                                         name="ma_phieu_xuat" value="{{ $ma_phieu_xuat }}">
                                                                 </div>
@@ -219,8 +219,10 @@
                                                             $so_luong += $value->so_luong;
                                                         }
                                                     @endphp
-                                                    {{-- <input type="hidden" class="so_luong" value="{{ $so_luong }}"> --}}
-                                                    <td class="tb-col"><span>{{ $so_luong }}</span>
+                                                    <td class="tb-col">
+                                                        <input type="hidden" class="so_luong"
+                                                            value="{{ $so_luong }}">
+                                                        <span>{{ $so_luong }}</span>
                                                     </td>
                                                     <td class="tb-col"><span>{{ $hang->don_vi_tinh }}</span></td>
                                                     <td class="tb-col">
@@ -279,18 +281,39 @@
         var socket = io(url_socket)
         socket.on('laravel_database_Cart', (data) => {
             let items = document.querySelectorAll('.item-row');
+
             let check = true
             items.forEach(function(item) {
                 if (item.getAttribute('id') == data.data.sanPham.ma_hang_hoa) {
                     check = false
                     let soluong = item.querySelector('.soLuong').value;
                     item.querySelector('.soLuong').value = parseInt(soluong) + 1;
+                    let item2 = document.querySelector('#hang-' + item.getAttribute('data-index'))
+                    let donGia = document.querySelector('#donGia')
+                    let donGiaInput = document.querySelector('#don_gia').value
+
+                    let gia = new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(parseInt(donGiaInput) + parseInt(data.data.sanPham.gia_ban))
+
+                    donGia.innerHTML = gia
+                    document.querySelector('#don_gia').value = parseInt(donGiaInput) + parseInt(data.data.sanPham.gia_ban)
                 }
             });
             if (check) {
-                let gia_ban = new Intl.NumberFormat('en-IN', {
-                    maximumSignificantDigits: 3
+                let donGia = document.querySelector('#donGia')
+                let donGiaInput = document.querySelector('#don_gia').value
+                let gia_ban = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
                 }).format(data.data.sanPham.gia_ban)
+                let gia = new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(parseInt(donGiaInput) + parseInt(data.data.sanPham.gia_ban))
+                    donGia.innerHTML = gia
+                    document.querySelector('#don_gia').value = parseInt(donGiaInput) + parseInt(data.data.sanPham.gia_ban)
                 $('#tableChiTietXuat').append(`
                 <tr class="item-row mb-4" id="${data.data.sanPham.ma_hang_hoa}">
                     <td class="tb-col">
@@ -309,7 +332,7 @@
                         <input style="width:100%" type="hidden"
                             class="form-control" name="gia_ban[]" value="${data.data.sanPham.gia_ban}" />
                         <div class="form-control-wrap d-flex">
-                             ${gia_ban} VND
+                             ${gia_ban}
                         </div>
                     </td>
                     <td class="tb-col">
@@ -370,8 +393,9 @@
                     tongSL: item.querySelector('.so_luong').value
                 }
 
-                let gia_ban = new Intl.NumberFormat('en-IN', {
-                    maximumSignificantDigits: 3
+                let gia_ban = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
                 }).format(itemData.giaBan)
                 $('#tableChiTietXuat').append(`
                 <tr class="item-row mb-4" id="${itemData.id}">
@@ -391,7 +415,7 @@
                         <input style="width:100%" type="hidden"
                             class="form-control" name="gia_ban[]" value="${itemData.giaBan}" />
                         <div class="form-control-wrap d-flex">
-                             ${gia_ban} VND
+                             ${gia_ban}
                         </div>
                     </td>
                     <td class="tb-col">

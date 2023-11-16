@@ -68,33 +68,33 @@ class XuatKhoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(Request $request)
-    // {
-    //     DB::beginTransaction();
-    //     try {
-    //         $phieu_xuat = XuatKho::create([
-    //             'ma_phieu_xuat' => $request->ma_phieu_xuat,
-    //             'khach_hang' => $request->khach_hang,
-    //             'ngay_xuat' => $request->ngay_xuat,
-    //             'mo_ta' => $request->mo_ta,
-    //             'don_gia' => $request->don_gia,
-    //             'id_user' => Auth::user()->id,
-    //         ]);
+    public function store(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $phieu_xuat = XuatKho::create([
+                'ma_phieu_xuat' => $request->ma_phieu_xuat,
+                'khach_hang' => $request->khach_hang,
+                'ngay_xuat' => $request->ngay_xuat,
+                'mo_ta' => $request->mo_ta,
+                'don_gia' => $request->don_gia,
+                'id_user' => Auth::user()->id,
+            ]);
 
-    //         for ($i = 0; $i < count($request['ma_hang_hoa']); $i++) {
-    //             ChiTietXuatKho::create([
-    //                 'ma_phieu_xuat' => $phieu_xuat->ma_phieu_xuat,
-    //                 'id_chi_tiet_hang_hoa' => $request->id[$i],
-    //                 'so_luong' => $request->so_luong[$i],
-    //                 'gia_xuat' => $request->gia_ban[$i]
-    //             ]);
-    //         }
-    //         DB::commit();
-    //         return redirect('/xuat-kho')->with('success', 'xuất hóa đơn thành công');
-    //     } catch (\Throwable $th) {
-    //         DB::rollBack();
-    //     }
-    // }
+            for ($i = 0; $i < count($request['ma_hang_hoa']); $i++) {
+                ChiTietXuatKho::create([
+                    'ma_phieu_xuat' => $phieu_xuat->ma_phieu_xuat,
+                    'id_chi_tiet_hang_hoa' => $request->id[$i],
+                    'so_luong' => $request->so_luong[$i],
+                    'gia_xuat' => $request->gia_ban[$i]
+                ]);
+            }
+            DB::commit();
+            return redirect('/xuat-kho')->with('success', 'xuất hóa đơn thành công');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        }
+    }
 
     /**
      * Display the specified resource.

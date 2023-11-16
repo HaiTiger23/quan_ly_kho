@@ -26,10 +26,9 @@ class HangHoaStoreRequest extends FormRequest
             'ma_hang_hoa' => 'required|max:100|unique:hang_hoa,ma_hang_hoa',
             'id_loai_hang' => 'required|integer',
             'don_vi_tinh' => 'required|max:50',
-            'gia_ban' => 'required|integer',
+            'gia_ban' => 'required|integer|min:0',
             'change_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'barcode' => ['nullable', 'string', 'max:20', 'regex:/^[A-Z0-9]+$/', 'unique:hang_hoa,barcode'],
-
+            'barcode' => ['required', 'max:20', 'regex:/^[A-Z0-9]+$/', 'unique:hang_hoa,barcode'],
         ];
     }
 
@@ -50,9 +49,11 @@ class HangHoaStoreRequest extends FormRequest
             'change_img.max' => 'Kích thước hình ảnh không được vượt quá :max KB.',
             'barcode.max' => 'Mã vạch không được vượt quá :max ký tự.',
             'gia_ban.integer' => 'Hàng hóa phải là số nguyên.',
-            'barcode.integer' => 'Mã vạch phải là số nguyên.',
+            'barcode.required' => 'Mã vạch không được bỏ trống.',
             'barcode.unique' => 'Mã vạch đã tồn tại.',
-            'barcode.regex' => 'Mã vạch không hợp lệ. Vui lòng kiểm tra lại.'
+            'barcode.regex' => 'Mã vạch không hợp lệ. Vui lòng kiểm tra lại.',
+            'gia_ban.min' => 'Bạn cần nhập giá bán lớn hơn 0.',
+            'gia_ban.required' => 'Giá bán không được bỏ trống.',
         ];
     }
 }
