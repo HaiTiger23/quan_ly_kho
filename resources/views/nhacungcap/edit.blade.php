@@ -33,7 +33,7 @@
                                                         <div class="col-lg-6">
                                                             <div class="form-group"><label for="ten_ncc" class="form-label">Tên nhà cung cấp</label>
                                                                 <div class="form-control-wrap"><input type="text" class="form-control" id="ten_ncc"
-                                                                        name="ten_ncc" value="{{ $nha_cung_cap->ten_ncc }}" placeholder="Tên nhà cung cấp" required>
+                                                                        name="ten_ncc" value="{{ $nha_cung_cap->ten_ncc }}" placeholder="Tên nhà cung cấp">
                                                                 </div>
                                                                 @if ($errors)
                                                                     <span class="text-danger py-1 mt-2">{{ $errors->first('ten_ncc') }}</span>
@@ -43,7 +43,7 @@
                                                         <div class="col-lg-6">
                                                             <div class="form-group"><label for="ma_ncc" class="form-label">Mã nhà cung cấp</label>
                                                                 <div class="form-control-wrap"><input type="text" class="form-control" id="ma_ncc"
-                                                                        name="ma_ncc" value="{{ $nha_cung_cap->ma_ncc }}" placeholder="Mã nhà cung cấp" required>
+                                                                        name="ma_ncc" value="{{ $nha_cung_cap->ma_ncc }}" placeholder="Mã nhà cung cấp">
                                                                 </div>
                                                                 @if ($errors)
                                                                     <span class="text-danger py-1 mt-2">{{ $errors->first('ma_ncc') }}</span>
@@ -53,7 +53,7 @@
                                                         <div class="col-lg-6">
                                                             <div class="form-group"><label for="sdt" class="form-label">Số điện thoại</label>
                                                                 <div class="form-control-wrap"><input type="text" class="form-control" id="sdt"
-                                                                        name="sdt" value="0{{ $nha_cung_cap->sdt }}" placeholder="Số điện thoại" required>
+                                                                        name="sdt" value="0{{ $nha_cung_cap->sdt }}" placeholder="Số điện thoại">
                                                                 </div>
                                                                 @if ($errors)
                                                                     <span class="text-danger py-1 mt-2">{{ $errors->first('sdt') }}</span>
@@ -80,11 +80,11 @@
                                                         <div class="col-lg-12">
                                                             <div class="form-group"><label for="dia_chi" class="form-label">Địa chỉ</label>
                                                                 <div class="form-control-wrap"><input type="text" class="form-control" id="dia_chi"
-                                                                        name="dia_chi" value="{{ $nha_cung_cap->dia_chi }}" placeholder="Địa chỉ" required>
+                                                                        name="dia_chi" value="{{ $nha_cung_cap->dia_chi }}" placeholder="Địa chỉ">
                                                                 </div>
-                                                                @if ($errors)
+                                                                {{-- @if ($errors)
                                                                     <span class="text-danger py-1 mt-2">{{ $errors->first('dia_chi') }}</span>
-                                                                @endif
+                                                                @endif --}}
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">

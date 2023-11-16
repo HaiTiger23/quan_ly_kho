@@ -7,6 +7,8 @@ use App\Models\NhaCungCap;
 use App\Models\ChiTietHangHoa;
 use App\Models\TrangThai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class NhaCungCapController extends Controller
 {
@@ -31,18 +33,48 @@ class NhaCungCapController extends Controller
         return view('nhacungcap.create', compact('trang_thai', 'nha_cung_cap'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'ma_ncc' => 'required|unique:nha_cung_cap,ma_ncc',
-            'ten_ncc' => 'required|max:255',
-            'id_trang_thai' => 'required|integer',
-            'sdt' => 'required|regex:/^(0)[0-9]{9}$/',
-            'dia_chi' => 'string|max:255',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'ma_ncc' => 'required|unique:nha_cung_cap,ma_ncc',
+                'ten_ncc' => 'required|max:255',
+                'id_trang_thai' => 'required|integer',
+                'sdt' => 'required|regex:/^(0)[0-9]{9}$/',
+                'dia_chi' => 'required|string|max:255',
+            ],
+            [
+                'ma_ncc' => [
+                    'required' => 'Mã nhà cung cấp là bắt buộc.',
+                    'unique' => 'Mã nhà cung cấp đã tồn tại.',
+                ],
+                'ten_ncc' => [
+                    'required' => 'Tên nhà cung cấp là bắt buộc.',
+                    'max' => 'Tên nhà cung cấp không được vượt quá :max ký tự.',
+                ],
+                'id_trang_thai' => [
+                    'required' => 'Trạng thái là bắt buộc.',
+                    'integer' => 'Trạng thái phải là một số nguyên.',
+                ],
+                'sdt' => [
+                    'required' => 'Số điện thoại là bắt buộc.',
+                    'regex' => 'Số điện thoại không hợp lệ.',
+                ],
+                'dia_chi' => [
+                    'required' => 'Địa chỉ là bắt buộc.',
+                    'string' => 'Địa chỉ phải là một chuỗi.',
+                    'max' => 'Địa chỉ không được vượt quá :max ký tự.',
+                ],
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $data = $request->all();
 
         $mo_ta = json_decode($request->mo_ta)->ops[0]->insert;
 
@@ -72,7 +104,7 @@ class NhaCungCapController extends Controller
         $nha_cung_cap = NhaCungCap::where('ma_ncc', $code)->first();
         $chi_tiet_hang_hoa = ChiTietHangHoa::where('ma_ncc', $code)->paginate(10);
 
-        $tong = $chi_tiet_hang_hoa->sum(function($h) {
+        $tong = $chi_tiet_hang_hoa->sum(function ($h) {
             return $h->so_luong_goc * $h->gia_nhap;
         });
 
@@ -107,21 +139,49 @@ class NhaCungCapController extends Controller
      */
     public function update(Request $request, $code)
     {
-        $request->validate([
-            'ma_ncc' => 'required|max:50',
-            'ten_ncc' => 'required|max:255',
-            'id_trang_thai' => 'required|integer',
-            'dia_chi' => 'string|max:255',
-            'sdt' => 'required|regex:/^(0)[0-9]{9}$/'
-        ], [
-            'sdt.required' => 'Bạn cần thêm số điện thoại!',
-            'sdt.regex' => 'Định dạng số điện thoại không đúng.'
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'ma_ncc' => [
+                    'required',
+                    Rule::unique('nha_cung_cap', 'ma_ncc')->ignore($code, 'ma_ncc'),
+                ],
+                'ten_ncc' => 'required|max:255',
+                'id_trang_thai' => 'required|integer',
+                'sdt' => 'required|regex:/^(0)[0-9]{9}$/',
+                'dia_chi' => 'required|string|max:255',
+            ],
+            [
+                'ma_ncc' => [
+                    'required' => 'Mã nhà cung cấp là bắt buộc.',
+                    'unique' => 'Mã nhà cung cấp đã tồn tại.',
+                ],
+                'ten_ncc' => [
+                    'required' => 'Tên nhà cung cấp là bắt buộc.',
+                    'max' => 'Tên nhà cung cấp không được vượt quá :max ký tự.',
+                ],
+                'id_trang_thai' => [
+                    'required' => 'Trạng thái là bắt buộc.',
+                    'integer' => 'Trạng thái phải là một số nguyên.',
+                ],
+                'sdt' => [
+                    'required' => 'Số điện thoại là bắt buộc.',
+                    'regex' => 'Số điện thoại không hợp lệ.',
+                ],
+                'dia_chi' => [
+                    'required' => 'Địa chỉ là bắt buộc.',
+                    'string' => 'Địa chỉ phải là một chuỗi.',
+                    'max' => 'Địa chỉ không được vượt quá :max ký tự.',
+                ],
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         $data = $request->all();
-
         $nha_cung_cap = NhaCungCap::where('ma_ncc', $code)->first();
-
         $mo_ta = json_decode($request->mo_ta)->ops[0]->insert;
 
         $status = $nha_cung_cap->update([
@@ -152,7 +212,7 @@ class NhaCungCapController extends Controller
         if ($status) {
             Alert::success('Thành công', 'Xóa thông tin nhà cung cấp thành công!');
             return redirect()->route('nha-cung-cap.index');
-        } else{
+        } else {
             Alert::error('Thất bại', 'Có lỗi trong quá trình xóa. Xin vui lòng thử lại!')->autoClose(5000);
             return back();
         }

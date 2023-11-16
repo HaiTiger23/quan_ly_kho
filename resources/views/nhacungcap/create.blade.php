@@ -33,7 +33,7 @@
                                                             <div class="form-group"><label for="ma_ncc" class="form-label">Mã nhà cung cấp</label>
                                                                 <div class="form-control-wrap"><input type="text" class="form-control" id="ma_ncc"
                                                                         name="ma_ncc" maxlength="100" minlength="1" value="{{ old('ma_ncc') }}"
-                                                                        placeholder="Mã nhà cung cấp" required>
+                                                                        placeholder="Mã nhà cung cấp">
                                                                 </div>
                                                                 @if ($errors)
                                                                     <span class="text-danger py-1 mt-2">{{ $errors->first('ma_ncc') }}</span>
@@ -44,7 +44,7 @@
                                                             <div class="form-group"><label for="ten_ncc" class="form-label">Tên nhà cung cấp</label>
                                                                 <div class="form-control-wrap"><input type="text" class="form-control" id="ten_ncc"
                                                                         name="ten_ncc" maxlength="100" minlength="1" value="{{ old('ten_ncc') }}"
-                                                                        placeholder="Tên nhà cung cấp" required>
+                                                                        placeholder="Tên nhà cung cấp">
                                                                 </div>
                                                                 @if ($errors)
                                                                     <span class="text-danger py-1 mt-2">{{ $errors->first('ten_ncc') }}</span>
@@ -55,7 +55,7 @@
                                                             <div class="form-group"><label for="sdt" class="form-label">Số điện thoại</label>
                                                                 <div class="form-control-wrap"><input type="text" class="form-control" id="sdt"
                                                                         name="sdt" maxlength="10" minlength="10" value="{{ old('sdt') }}"
-                                                                        placeholder="Số điện thoại" required>
+                                                                        placeholder="Số điện thoại">
                                                                 </div>
                                                                 @if ($errors)
                                                                     <span class="text-danger py-1 mt-2">{{ $errors->first('sdt') }}</span>
@@ -75,17 +75,20 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
+                                                                @if ($errors)
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('id_trang_thai') }}</span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="form-group"><label for="dia_chi" class="form-label">Địa chỉ</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" id="dia_chi" name="dia_chi" maxlength="255"
-                                                                        minlength="0" value="{{ old('dia_chi') }}" placeholder="Địa chỉ" required>
+                                                                    <input type="text" class="form-control" id="dia_chi" name="dia_chi" value="{{ old('dia_chi') }}" placeholder="Địa chỉ">
                                                                 </div>
-                                                                @if ($errors)
+                                                                {{-- @if ($errors)
                                                                     <span class="text-danger py-1 mt-2">{{ $errors->first('dia_chi') }}</span>
-                                                                @endif
+                                                                @endif --}}
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">

@@ -59,6 +59,10 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
+                                                                @if ($errors)
+                                                                    <span
+                                                                        class="text-danger py-1 mt-2">{{ $errors->first('id_trang_thai') }}</span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
