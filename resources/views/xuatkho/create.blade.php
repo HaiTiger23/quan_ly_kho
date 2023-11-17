@@ -112,7 +112,7 @@
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
                                                                 <label class="form-label">Đơn Giá</label>
-                                                                <input type="hidden" id="don_gia" name="don_gia"
+                                                                <input type="hidden" id="don_gia_input" name="don_gia_input"
                                                                     value="0">
                                                                 <div class="form-control-wrap" id="donGia">
                                                                     0 VND
@@ -284,7 +284,7 @@
                     item.querySelector('.soLuong').value = parseInt(soluong) + 1;
                     let item2 = document.querySelector('#hang-' + item.getAttribute('data-index'))
                     let donGia = document.querySelector('#donGia')
-                    let donGiaInput = document.querySelector('#don_gia').value
+                    let donGiaInput = document.querySelector('#don_gia_input').value
 
                     let gia = new Intl.NumberFormat('vi-VN', {
                         style: 'currency',
@@ -292,12 +292,12 @@
                     }).format(parseInt(donGiaInput) + parseInt(data.data.sanPham.gia_ban))
 
                     donGia.innerHTML = gia
-                    document.querySelector('#don_gia').value = parseInt(donGiaInput) + parseInt(data.data.sanPham.gia_ban)
+                    document.querySelector('#don_gia_input').value = parseInt(donGiaInput) + parseInt(data.data.sanPham.gia_ban)
                 }
             });
             if (check) {
                 let donGia = document.querySelector('#donGia')
-                let donGiaInput = document.querySelector('#don_gia').value
+                let donGiaInput = document.querySelector('#don_gia_input').value
                 let gia_ban = new Intl.NumberFormat('vi-VN', {
                     style: 'currency',
                     currency: 'VND'
@@ -307,7 +307,7 @@
                         currency: 'VND'
                     }).format(parseInt(donGiaInput) + parseInt(data.data.sanPham.gia_ban))
                     donGia.innerHTML = gia
-                    document.querySelector('#don_gia').value = parseInt(donGiaInput) + parseInt(data.data.sanPham.gia_ban)
+                    document.querySelector('#don_gia_input').value = parseInt(donGiaInput) + parseInt(data.data.sanPham.gia_ban)
                 $('#tableChiTietXuat').append(`
                 <tr class="item-row mb-4" id="${data.data.sanPham.ma_hang_hoa}">
                     <td class="tb-col">
@@ -351,6 +351,7 @@
                     item.remove();
                 }
             });
+            updateTongTien();
         }
 
         function addItem(e) {
@@ -359,16 +360,7 @@
             let check = true
 
             let donGia = document.querySelector('#donGia')
-            let donGiaInput = document.querySelector('#don_gia').value
-
-            document.querySelector('#don_gia').value = parseInt(donGiaInput) + parseInt(item.querySelector('.giaBan').value)
-
-            let gia = new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-            }).format(parseInt(donGiaInput) + parseInt(item.querySelector('.giaBan').value))
-
-            donGia.innerHTML = gia
+            let donGiaInput = document.querySelector('#don_gia_input').value
 
             items.forEach(function(item) {
                 if (item.getAttribute('id') == e.getAttribute('data-index')) {
@@ -407,7 +399,7 @@
                     </td>
                     <td class="tb-col">
                         <input style="width:100%" type="hidden"
-                            class="form-control" name="gia_ban[]" value="${itemData.giaBan}" />
+                            class="form-control gia_sp" name="gia_ban[]" value="${itemData.giaBan}" />
                         <div class="form-control-wrap d-flex">
                              ${gia_ban}
                         </div>
@@ -415,7 +407,7 @@
                     <td class="tb-col">
                         <div class="form-control-wrap"><input style="width:100%"
                                 type="number" min="1" max="${itemData.tongSL}"
-                                class="form-control soLuong" name="so_luong[]" required  value="1"/>
+                                class="form-control soLuong so_luong_sp" name="so_luong[]" required  value="1"/>
                         </div>
                     </td>
                     <td class="tb-col tb-col-end text-center"><div class="btn btn-danger btn-sm" onclick="removeItem(this)" data-index="${itemData.id}">Xóa</div>
@@ -423,7 +415,36 @@
                 </tr>
                 `)
             }
+            updateChangeSoLuong();
+            updateTongTien();
         }
+
+        function updateTongTien() {
+            let tongTien = 0;
+            let listGiaSP = document.querySelectorAll('.gia_sp');
+            let listSoLuongSP = document.querySelectorAll('.so_luong_sp');
+
+            for (let index = 0; index < listGiaSP.length; index++) {
+                const giaSp = listGiaSP[index].value;
+                const soLuongSp = listSoLuongSP[index].value;
+                tongTien += giaSp *soLuongSp
+            }
+            document.querySelector('#don_gia_input').value = tongTien;
+              let gia = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(tongTien)
+            document.querySelector('#donGia').innerHTML = gia
+        }
+        function updateChangeSoLuong() {
+              let listSoLuongSP = document.querySelectorAll('.so_luong_sp');
+              listSoLuongSP.forEach((e) => {
+                e.addEventListener('change', () => {
+                    updateTongTien();
+                });
+              })
+        }
+
         $('#btn-submit').on('click', () => {
             let form = $('#form-create')
             let formData = form.serialize();

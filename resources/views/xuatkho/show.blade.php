@@ -1,4 +1,11 @@
 @extends('default')
+@section('style')
+@media print {
+   .no-print {
+       display: none;
+    }
+}
+@endsection
 
 @section('content')
     <div class="nk-content">
@@ -12,7 +19,8 @@
                                 <nav>
                                     <ol class="breadcrumb breadcrumb-arrow mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a></li>
-                                        <li class="breadcrumb-item"><a href="{{ route('xuat-kho.index') }}">Thanh toán</a></li>
+                                        <li class="breadcrumb-item"><a href="{{ route('xuat-kho.index') }}">Thanh toán</a>
+                                        </li>
                                         <li class="breadcrumb-item active" aria-current="page">
                                             {{ $phieu_xuat->ma_phieu_xuat }}
                                         </li>
@@ -25,8 +33,8 @@
                     </div>
                     <div class="nk-block">
                         <div class="card">
-                            <div class="nk-invoice">
-                                <div class="nk-invoice-head flex-column flex-sm-row">
+                            <div class="nk-invoice" id="hoa_don" >
+                                <div class="nk-invoice-head  p-3 flex-column flex-sm-row">
                                     <div class="nk-invoice-head-item mb-3 mb-sm-0">
                                         <div class="h4">Chi tiết</div>
                                         <ul>
@@ -100,9 +108,13 @@
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="4"></td>
-                                                    <td colspan="2"><h4>Tổng tiền:</h4></td>
-                                                    <td class="tb-col tb-col-end" colspan="2"><h4>{{ number_format($result, 0, '', ',') }}
-                                                        VNĐ</h4></td>
+                                                    <td colspan="2">
+                                                        <h4>Tổng tiền:</h4>
+                                                    </td>
+                                                    <td class="tb-col tb-col-end" colspan="2">
+                                                        <h4>{{ number_format($result, 0, '', ',') }}
+                                                            VNĐ</h4>
+                                                    </td>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -110,10 +122,31 @@
                                 </div>
                                 @include('parts.paginate', ['paginator' => $chi_tiet_phieu_xuat])
                             </div>
+                            <div class=" d-flex justify-content-end p-3 no-print">
+                                <button class=" btn btn-primary " id="btn-print">In hóa đơn</button>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        (function() {
+            let btnPrint = document.getElementById('btn-print');
+            btnPrint.addEventListener('click', function() {
+                var printContents = document.getElementById('hoa_don').innerHTML;
+                var originalContents = document.body.innerHTML;
+
+                document.body.innerHTML = printContents;
+
+                window.print();
+                location.reload();
+
+            })
+        })()
+    </script>
 @endsection

@@ -44,14 +44,16 @@ class XuatKhoController extends Controller
     {
         DB::beginTransaction();
         try {
+
             $phieu_xuat = XuatKho::create([
                 'ma_phieu_xuat' => $request->ma_phieu_xuat,
                 'khach_hang' => $request->khach_hang,
                 'ngay_xuat' => $request->ngay_xuat,
                 'mo_ta' => $request->mo_ta,
-                'don_gia' => $request->don_gia,
+                'don_gia' => $request->don_gia_input,
                 'id_user' => 1,
             ]);
+
             for ($i = 0; $i < count($request['ma_hang_hoa']); $i++) {
                 $hangHoa = HangHoa::where('id',$request->id[$i])->first();
                 $chitetHangHoa = ChiTietHangHoa::where('ma_hang_hoa', $hangHoa->ma_hang_hoa)->first();
