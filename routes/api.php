@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\LoaiHangController;
+use App\Http\Controllers\Api\NhaCungCapController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,7 +53,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('/product')->group(function () {
         Route::post('/', [HangHoaController::class, 'viewFromBarcode'])->name('api.product.view');
         Route::get('/', [HangHoaController::class, 'viewAll'])->name('api.prroduct.viewall');
-        Route::post('/store', [HangHoaController::class, 'store'])->name('api.prroduct.store');
+        Route::post('/create', [HangHoaController::class, 'create'])->name('api.prroduct.create');
+
+    });
+    // Nhà cung cấp
+    Route::prefix('provider')->group(function () {
+        Route::get('/', [NhaCungCapController::class,'viewAll'])->name('api.provider.viewAll');
+    });
+    // Loại hàng hóa
+    Route::prefix('type_product')->group(function () {
+        Route::get('/', [LoaiHangController::class,'viewAll'])->name('api.type_products.viewAll');
     });
 
     Route::post('/sale-history', [XuatKhoController::class, 'saleHistory']);
