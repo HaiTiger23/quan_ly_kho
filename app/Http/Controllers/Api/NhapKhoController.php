@@ -92,7 +92,7 @@ class NhapKhoController extends Controller
                 'id_loai_hang' => $data[0]['id_loai_hang'],
                 'don_vi_tinh' => $data[0]['don_vi_tinh'],
                 'barcode' => $data[0]['barcode'] == '' ? null : $data[0]['barcode'],
-                'img' => "hanghoa.jpg",
+                'img' => "hanghoa.png",
                 'mo_ta' => strlen($data[0]['mo_ta']) == 0 ? 'Không có mô tả cụ thể!' : $data[0]['mo_ta']
             ]);
 

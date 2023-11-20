@@ -51,7 +51,7 @@ class HangHoaController extends Controller
     public function store(HangHoaStoreRequest $request)
     {
         $data = $request->validated();
-        $file_name = "hanghoa.jpg";
+        $file_name = "hanghoa.png";
 
         if ($request->hasFile('change_img')) {
             $img = $request->file('change_img');
@@ -154,7 +154,7 @@ class HangHoaController extends Controller
         ChiTietHangHoa::where('ma_hang_hoa', $ma_hang_hoa)->update(['ma_hang_hoa' => $data['ma_hang_hoa']]);
 
         if ($status) {
-            if ($request->hasFile('change_img') && $file_name != $request->change_img && $file_name != 'hanghoa.jpg') {
+            if ($request->hasFile('change_img') && $file_name != $request->change_img && $file_name != 'hanghoa.png') {
                 unlink(storage_path('app/public/images/hanghoa' . $file_name));
             };
 

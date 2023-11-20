@@ -85,7 +85,7 @@ class HangHoaController extends Controller
             return response()->json(['error' => $validator->errors()],200);
         }
         $data = $request->all();
-        $file_name = "hanghoa.jpg";
+        $file_name = "hanghoa.png";
 
         if ($request->hasFile('change_img')) {
             $img = $request->file('change_img');
