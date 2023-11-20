@@ -14,6 +14,7 @@ use App\Models\HangHoa;
 use App\Exports\XuatKhoExport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class XuatKhoController extends Controller
@@ -56,7 +57,7 @@ class XuatKhoController extends Controller
             ]);
 
             for ($i = 0; $i < count($request['ma_hang_hoa']); $i++) {
-                $hangHoa = HangHoa::where('id',$request->id[$i])->first();
+                $hangHoa = HangHoa::where('id', $request->id[$i])->first();
                 $chitetHangHoa = ChiTietHangHoa::where('ma_hang_hoa', $hangHoa->ma_hang_hoa)->first();
                 ChiTietXuatKho::create([
                     'ma_phieu_xuat' => $phieu_xuat->ma_phieu_xuat,
@@ -64,12 +65,14 @@ class XuatKhoController extends Controller
                     'so_luong' => $request->so_luong[$i],
                     'gia_xuat' => $request->gia_ban[$i]
                 ]);
+                $chitetHangHoa->so_luong -= $request->so_luong[$i];
+                $chitetHangHoa->save();
             }
             DB::commit();
             return redirect('/xuat-kho')->with('success', 'xuất hóa đơn thành công');
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th->getMessage());
+            Log::error($th->getMessage());
         }
     }
 
@@ -90,7 +93,7 @@ class XuatKhoController extends Controller
             foreach ($saleHistory as $history) {
                 foreach ($history->getChiTiet as $hang_hoa) {
                     $hang = $hang_hoa->getChiTiet->getHangHoa;
-                    if(isset($hang->img)) {
+                    if (isset($hang->img)) {
                         $hang->img = asset('storage/images/hanghoa/' . $hang->img);
                     }
                     $history['hang_hoa'] = $hang;
