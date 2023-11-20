@@ -42,6 +42,7 @@ class XuatKhoController extends Controller
 
     public function store(Request $request)
     {
+
         DB::beginTransaction();
         try {
 
@@ -51,7 +52,7 @@ class XuatKhoController extends Controller
                 'ngay_xuat' => $request->ngay_xuat,
                 'mo_ta' => $request->mo_ta,
                 'don_gia' => $request->don_gia_input,
-                'id_user' => 1,
+                'id_user' => $request->nhanvien_id,
             ]);
 
             for ($i = 0; $i < count($request['ma_hang_hoa']); $i++) {
@@ -84,12 +85,14 @@ class XuatKhoController extends Controller
     {
         try {
             $user = auth("sanctum")->user();
-            $saleHistory = XuatKho::where('id_user', $user->id)->get();
+            $saleHistory = XuatKho::all();
 
             foreach ($saleHistory as $history) {
                 foreach ($history->getChiTiet as $hang_hoa) {
                     $hang = $hang_hoa->getChiTiet->getHangHoa;
-                    $hang->img = asset('storage/images/hanghoa/' . $hang->img);
+                    if(isset($hang->img)) {
+                        $hang->img = asset('storage/images/hanghoa/' . $hang->img);
+                    }
                     $history['hang_hoa'] = $hang;
                 }
             }

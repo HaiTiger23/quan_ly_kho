@@ -86,7 +86,7 @@
                                                             <span>{{ $chi_tiet->getChiTiet->getHangHoa->ma_hang_hoa }}</span>
                                                         </td>
                                                         <td class="overflow-col">
-                                                            <span>{{ $chi_tiet->getChiTiet->getHangHoa->ten_hang_hoa }}</span>
+                                                            <span>{{ $chi_tiet->getChiTiet->getHangHoa->ten_hang_hoa ?? "" }}</span>
                                                         </td>
                                                         <td class="tb-col">
                                                             <span>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $chi_tiet->getChiTiet->ngay_san_xuat)->format('m/d/Y') }}</span>

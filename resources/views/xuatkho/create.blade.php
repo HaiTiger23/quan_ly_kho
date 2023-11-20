@@ -39,6 +39,9 @@
                                                 <div class="card-body">
                                                     <div class="row g-gs">
                                                         <div class="col-lg-6">
+                                                            <div class=" d-none">
+                                                                <input type="text" value="{{ Auth::user()->id }}" name="nhanvien_id">
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label for="ma_phieu_xuat" class="form-label">Mã Hóa
                                                                     đơn</label>
