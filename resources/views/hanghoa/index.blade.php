@@ -112,10 +112,10 @@
                                                                             href="{{ route('hang-hoa.edit', $hang->ma_hang_hoa) }}"><em
                                                                                 class="icon ni ni-edit"></em><span>Sửa</span></a>
                                                                     </li>
-                                                                    <li><a href="#" data-bs-toggle="modal"
+                                                                    {{-- <li><a href="#" data-bs-toggle="modal"
                                                                             data-bs-target="#xoahanghoa{{ $hang->id }}"><em
                                                                                 class="icon ni ni-trash"></em><span>Xóa</span></a>
-                                                                    </li>
+                                                                    </li> --}}
                                                                 @endcan
                                                                 <li><a
                                                                         href="{{ route('hang-hoa.show', $hang->ma_hang_hoa) }}"><em
