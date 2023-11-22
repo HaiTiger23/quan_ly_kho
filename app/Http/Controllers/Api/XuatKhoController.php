@@ -58,21 +58,21 @@ class XuatKhoController extends Controller
 
             for ($i = 0; $i < count($request['ma_hang_hoa']); $i++) {
                 $hangHoa = HangHoa::where('id', $request->id[$i])->first();
-                $chitetHangHoa = ChiTietHangHoa::where('ma_hang_hoa', $hangHoa->ma_hang_hoa)->first();
+                $chiTietHangHoa = ChiTietHangHoa::where('ma_hang_hoa', $hangHoa->ma_hang_hoa)->first();
                 ChiTietXuatKho::create([
                     'ma_phieu_xuat' => $phieu_xuat->ma_phieu_xuat,
-                    'id_chi_tiet_hang_hoa' => $chitetHangHoa->id,
+                    'id_chi_tiet_hang_hoa' => $chiTietHangHoa->id,
                     'so_luong' => $request->so_luong[$i],
                     'gia_xuat' => $request->gia_ban[$i]
                 ]);
-                $chitetHangHoa->so_luong -= $request->so_luong[$i];
-                $chitetHangHoa->save();
+                $chiTietHangHoa->so_luong -= $request->so_luong[$i];
+                $chiTietHangHoa->save();
             }
             DB::commit();
             return redirect('/xuat-kho')->with('success', 'xuất hóa đơn thành công');
         } catch (\Throwable $th) {
             DB::rollBack();
-            Log::error($th->getMessage());
+            Log::error(date("Y-m-d H:i:s") . $th->getMessage());
         }
     }
 
