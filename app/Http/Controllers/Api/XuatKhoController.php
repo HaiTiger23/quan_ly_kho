@@ -95,6 +95,8 @@ class XuatKhoController extends Controller
                     $hang = $hang_hoa->getChiTiet->getHangHoa;
                     if (isset($hang->img)) {
                         $hang->img = asset('storage/images/hanghoa/' . $hang->img);
+                    } else {
+                        $hang->img = asset('assets/images/hanghoa/hanghoa.png');
                     }
                     $history['hang_hoa'] = $hang;
                 }
