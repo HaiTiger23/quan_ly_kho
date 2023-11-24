@@ -46,7 +46,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //Information
     Route::prefix('/information')->group(function () {
         Route::post('/', [UserController::class, 'view'])->name('api.view');
-        Route::post('/update', [UserController::class, 'update'])->name('api.update');
+        Route::post('/update', [UserController::class, 'updateProfile'])->name('api.update');
         Route::post('/change-password', [UserController::class, 'changePassword'])->name('api.change_password');
     });
     //product
