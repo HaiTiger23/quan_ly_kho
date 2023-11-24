@@ -141,7 +141,7 @@
                                                                 class="image-upload-wrap d-flex flex-column align-items-center">
                                                                 <div class="media media-huge border">
                                                                     <img id="img" class="w-100 h-100"
-                                                                        src="{{ asset('storage/images/hanghoa/hanghoa.jpg') }}"
+                                                                        src="{{ asset('storage/images/hanghoa/hanghoa.png') }}"
                                                                         alt="img">
                                                                 </div>
                                                                 <div class="pt-3">

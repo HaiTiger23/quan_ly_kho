@@ -54,7 +54,7 @@
                                                         <div class="col-lg-6">
                                                             <div class="form-group"><label for="sdt" class="form-label">Số điện thoại</label>
                                                                 <div class="form-control-wrap"><input type="text" class="form-control" id="sdt"
-                                                                        name="sdt" maxlength="10" minlength="10" value="{{ old('sdt') }}"
+                                                                        name="sdt" value="{{ old('sdt') }}"
                                                                         placeholder="Số điện thoại">
                                                                 </div>
                                                                 @if ($errors)
