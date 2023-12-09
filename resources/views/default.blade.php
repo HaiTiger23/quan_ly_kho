@@ -45,6 +45,7 @@
 <body class="nk-body" data-sidebar-collapse="lg" data-navbar-collapse="lg">
     <div class="nk-app-root">
         <div class="nk-main">
+@include('parts.loading')
             @auth
                 @include('parts.sidebar')
 

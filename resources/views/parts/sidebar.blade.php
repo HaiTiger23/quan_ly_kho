@@ -2,9 +2,7 @@
     <div class="nk-sidebar-element nk-sidebar-head">
         <div class="nk-sidebar-brand">
             <a href="{{ route('dashboard') }}" class="logo-link">
-                <div class="logo-wrap">
-                    <img class="logo-svg" src="{{ asset('assets/images/logo-imm.jpg') }}" alt="">
-                </div>
+                <p class="logo-text">ICTU MALL MANAGER</p>
             </a>
             <div class="nk-sidebar-toggle me-n1"><button
                     class="btn btn-md btn-icon text-light btn-no-hover sidebar-toggle"><em

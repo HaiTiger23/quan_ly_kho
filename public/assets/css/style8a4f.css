@@ -26021,7 +26021,7 @@ a.fc-event-darker-soft {
 
 .is-theme .logo-svg,
 .is-dark .logo-svg {
-    --logo-text-color: #fff
+  --logo-text-color: #24214b;
 }
 
 .logo-text {
@@ -26146,7 +26146,7 @@ a.fc-event-darker-soft {
 .nk-menu-icon .icon {
     transition: color .3s;
     font-size: 1.125rem;
-    color: #2e314a
+    color: #2e314a !important;
 }
 
 .nk-menu-text {
@@ -26222,13 +26222,13 @@ a.fc-event-darker-soft {
 }
 
 .is-theme .nk-menu .nk-menu-link {
-    color: #f8f8f9;
+
     opacity: .9
 }
 
 .is-theme .nk-menu .nk-menu-link:hover {
     opacity: 1;
-    color: #fff
+
 }
 
 .is-theme .nk-menu .nk-menu-heading::before {
@@ -26933,7 +26933,7 @@ a.fc-event-darker-soft {
 .nk-sidebar-brand {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-grow: 1
 }
 
@@ -26952,6 +26952,7 @@ a.fc-event-darker-soft {
 }
 
 .nk-sidebar-head {
+    text-align: center;
     display: flex;
     align-items: center;
     padding: .875rem 1.375rem;
@@ -26961,6 +26962,11 @@ a.fc-event-darker-soft {
 .nk-sidebar-body {
     position: relative;
     height: 100%
+}
+.logo-text {
+    color: var(--logo-text-color) !important;
+    font-size: 23px;
+    font-weight: 700;
 }
 
 .nk-sidebar-content {
@@ -26974,7 +26980,7 @@ a.fc-event-darker-soft {
 }
 
 .nk-sidebar.is-theme {
-    background-color: #090127
+    background-color: #fff
 }
 
 .sidebar-overlay {
