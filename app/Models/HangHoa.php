@@ -34,6 +34,9 @@ class HangHoa extends Model
     {
         return $this->hasMany(ChiTietHangHoa::class, 'ma_hang_hoa', 'ma_hang_hoa');
     }
+    function QrNhapHangs() {
+        return $this->hasMany(QrNhapHang::class, 'hang_hoa_id');
+    }
 
     public function getChiTietXuatKho()
     {

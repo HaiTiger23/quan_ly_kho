@@ -1,2 +1,2 @@
-# Quản lý kho
+# Quản lý siêu thị
  

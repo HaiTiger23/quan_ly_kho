@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Events\ImportCart;
 use App\Http\Controllers\Controller;
+use App\Models\PhienNhapHang;
+use App\Models\QrNhapHang;
 use Illuminate\Http\Request;
 use App\Models\NhapKho;
 use App\Models\ChiTietHangHoa;
@@ -119,4 +121,53 @@ class NhapKhoController extends Controller
 
         event($event = new ImportCart($sanPham));
     }
+    function layPhienNhap() {
+        $user = auth("sanctum")->user();
+        $phienNhap = PhienNhapHang::where('user_id', $user->id)->first();
+        if($phienNhap) {
+            if ($phienNhap->status == 0) {
+                $phienNhap->status = 1;
+                $phienNhap->update();
+            }
+            return $this->successResponse('success', $phienNhap);
+        }else {
+            return $this->errorResponse('error');
+        }
+
+    }
+    function qrNhapKho(Request $request) {
+        try {
+        // Kiểm tra hàng hóa tồn tại không
+        $hangHoaExist = HangHoa::where('barcode', $request->qr_hang_hoa)->first();
+        if(!$hangHoaExist) {
+                return $this->errorResponse('Mã Barcode không tồn tại');
+        }
+        // Kiểm tra phiên nhập hàng
+        $phienNhapExist = PhienNhapHang::where('id', $request->phien_nhap_hang_id)->first();
+            if(!$phienNhapExist) {
+                return $this->errorResponse('Phiên nhập hàng không tồn tại');
+            }
+          $qrNhap = new QrNhapHang();
+          $qrNhap->phien_nhap_hang_id = $request->phien_nhap_hang_id;
+          $qrNhap->hang_hoa_id = $hangHoaExist->id;
+          $qrNhap->save();
+          return $this->successResponse('success', $hangHoaExist);
+        } catch (\Throwable $th) {
+            return $this->errorResponse('error');
+        }
+    }
+    function getListHangNhap($id) {
+        try {
+        $listHangNhap = QrNhapHang::where('phien_nhap_hang_id', $id)->get();
+        QrNhapHang::where('phien_nhap_hang_id', $id)->delete();
+        $listHangHoa = array();
+        foreach ($listHangNhap as $QrNhap) {
+            array_push($listHangHoa, $QrNhap->hangHoa);
+        }
+        return $this->successResponse('success', $listHangHoa);
+        } catch (\Throwable $th) {
+            return $this->errorResponse('error', $th->getMessage());
+        }
+    }
+
 }

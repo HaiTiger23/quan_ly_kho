@@ -175,41 +175,55 @@
                                                                         class="btn btn-danger btn-sm remove-item">Xóa</button>
                                                                 </td>
                                                             </tr>
-                                                             <template id="hang-hoa-template">
-                                                            <tr class="item-row">
-                                                                <td class="tb-col">
-                                                                    <div class="form-control-wrap d-flex">
-                                                                        <input style="width:80%" list="ma_hang_hoa" name="ma_hang_hoa[]" class="form-control">
-                                                                        <button class="btn btn-light" type="button" data-bs-toggle="modal"
-                                                                            data-bs-target="#them-hang">
-                                                                            <em class="icon ni ni-plus-circle"></em>
-                                                                        </button>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="tb-col">
-                                                                    <div class="form-control-wrap">
-                                                                        <input style="width:100%" type="number" min="1" max="1000000000"
-                                                                            class="form-control" name="so_luong[]" required />
-                                                                    </div>
-                                                                </td>
-                                                                <td class="tb-col">
-                                                                    <div class="form-control-wrap"><input style="width:100%" type="number" min="1"
-                                                                            max="1000000000" class="form-control" name="gia_nhap[]" required /></div>
-                                                                </td>
-                                                                <td class="tb-col">
-                                                                    <div class="form-control-wrap"><input style="width:100%" placeholder="dd/mm/yyyy"
-                                                                            type="date" class="form-control" name="ngay_san_xuat[]" required>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="tb-col">
-                                                                    <div class="form-control-wrap"><input style="width:100%" type="number" min="1"
-                                                                            max="1000000000" class="form-control" name="tg_bao_quan[]" required /></div>
-                                                                </td>
-                                                                <td class="tb-col tb-col-end text-center">
-                                                                    <button type="button" class="btn btn-danger btn-sm remove-item">Xóa</button>
-                                                                </td>
-                                                            </tr>
-                                                        </template>
+                                                            <template id="hang-hoa-template">
+                                                                <tr class="item-row">
+                                                                    <td class="tb-col">
+                                                                        <div class="form-control-wrap d-flex">
+                                                                            <input style="width:80%" list="ma_hang_hoa"
+                                                                                name="ma_hang_hoa[]" class="form-control">
+                                                                            <button class="btn btn-light" type="button"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#them-hang">
+                                                                                <em class="icon ni ni-plus-circle"></em>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="tb-col">
+                                                                        <div class="form-control-wrap">
+                                                                            <input style="width:100%" type="number"
+                                                                                min="1" max="1000000000"
+                                                                                class="form-control" name="so_luong[]"
+                                                                                required />
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="tb-col">
+                                                                        <div class="form-control-wrap"><input
+                                                                                style="width:100%" type="number"
+                                                                                min="1" max="1000000000"
+                                                                                class="form-control" name="gia_nhap[]"
+                                                                                required /></div>
+                                                                    </td>
+                                                                    <td class="tb-col">
+                                                                        <div class="form-control-wrap"><input
+                                                                                style="width:100%"
+                                                                                placeholder="dd/mm/yyyy" type="date"
+                                                                                class="form-control"
+                                                                                name="ngay_san_xuat[]" required>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="tb-col">
+                                                                        <div class="form-control-wrap"><input
+                                                                                style="width:100%" type="number"
+                                                                                min="1" max="1000000000"
+                                                                                class="form-control" name="tg_bao_quan[]"
+                                                                                required /></div>
+                                                                    </td>
+                                                                    <td class="tb-col tb-col-end text-center">
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-sm remove-item">Xóa</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </template>
                                                         </tbody>
                                                     </div>
                                                 </table>
@@ -471,70 +485,70 @@
         integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        var socket = io('http://localhost:6001')
-        socket.on('laravel_database_Import', (data) => {
-            let items = document.querySelectorAll('.item-row')
-            let check = true
-            items.forEach(function(element) {
-                if (!element.id) {
-                    element.remove();
-                }
-                if (element.id == data.data.sanPham.ma_hang_hoa) {
-                    check = false
+        setInterval(() => {
+            updateListProducts();
+        }, 2000);
+
+        function updateListProducts() {
+            var settings = {
+                 "url": "{{ route('api.them-hang.get_list_hang_nhap','') }}/{{ $phienNhap->id }}",
+                "method": "GET",
+                "timeout": 0,
+            };
+            $.ajax(settings).done(function(response) {
+                if(response.data.length > 0) {
+                    updateTableFromResponse(response.data)
                 }
             });
-            if (check) {
-                let itemsForm = $('#item-table #tb-container');
-                itemsForm.prepend(`
-                <tr class="item-row" id="${data.data.sanPham.ma_hang_hoa}">
-                    <td class="tb-col">
-                        <div class="form-control-wrap d-flex">
-                            <input style="width:80%" list="ma_hang_hoa"
-                                name="ma_hang_hoa[]" class="form-control" value="${data.data.sanPham.ma_hang_hoa}">
-                            <button class="btn btn-light" type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#them-hang">
-                                <em class="icon ni ni-plus-circle"></em>
-                            </button>
-                        </div>
-                    </td>
-                    <td class="tb-col">
-                        <div class="form-control-wrap"><input
-                                style="width:100%" type="number"
-                                min="1" max="1000000000"
-                                class="form-control" name="so_luong[]" value="1"
-                                required />
-                        </div>
-                    </td>
-                    <td class="tb-col">
-                        <div class="form-control-wrap"><input
-                                style="width:100%" type="number"
-                                min="1" max="1000000000"
-                                class="form-control" name="gia_nhap[]"
-                                required />
-                        </div>
-                    </td>
-                    <td class="tb-col">
-                        <div class="form-control-wrap"><input
-                                style="width:100%" placeholder="dd/mm/yyyy"
-                                type="date" class="form-control"
-                                name="ngay_san_xuat[]" required>
-                        </div>
-                    </td>
-                    <td class="tb-col">
-                        <div class="form-control-wrap"><input
-                                style="width:100%" type="number"
-                                min="1" max="1000000000"
-                                class="form-control" name="tg_bao_quan[]"
-                                required /></div>
-                    </td>
-                    <td class="tb-col tb-col-end text-center"><button
-                            type="button"
-                            class="btn btn-danger btn-sm remove-item">Xóa</button>
-                    </td>
-                </tr>
-                    `)
+        }
+        function updateTableFromResponse(data) {
+            for (const hangHoaReponse of data) {
+                  // Lấy danh sách hàng hóa hiện tại
+            const listHangHoa = document.querySelectorAll('input[name="ma_hang_hoa[]"]');
+            const listSoLuong = document.querySelectorAll('input[name="so_luong[]"]');
+            listHangHoa.forEach((hangHoa, index) =>{
+                if(hangHoa.value == hangHoaReponse.ma_hang_hoa) {
+                    updateCountHangHoa(index);
+                }else {
+                    // Nếu là thằng đầu tiên
+                    if(index == 0 && hangHoa.value.length == 0) {
+                        hangHoa.value =hangHoaReponse.ma_hang_hoa
+                        listSoLuong[index].value = 1
+                    }else {
+                        createItemFromResponse(hangHoaReponse.ma_hang_hoa);
+
+                    }
+                }
+            })
             }
-        })
+        }
+        function createItemFromResponse(maHangHoa) {
+            const hangHoaTemplate = document.getElementById('hang-hoa-template')
+            const hangHoa = hangHoaTemplate.content.cloneNode(true)
+            const inputs = hangHoa.querySelectorAll('input')
+            inputs.forEach(function(input) {
+                input.value = ''
+            });
+            console.log(maHangHoa);
+            let ma_hang_hoa_input = hangHoa.querySelector('input[name="ma_hang_hoa[]"]');
+            let so_luong_input = hangHoa.querySelector('input[name="so_luong[]"]');
+            ma_hang_hoa_input.value = maHangHoa;
+            so_luong_input.value= 1;
+            const delBtn = hangHoa.querySelector('.remove-item')
+            delBtn.addEventListener('click', function() {
+                delBtn.closest('.item-row').remove()
+            })
+            container.appendChild(hangHoa);
+        }
+        function updateCountHangHoa(index) {
+            const listSoLuong = document.querySelectorAll('input[name="so_luong[]"]');
+            let so_luong = listSoLuong[index];
+            if(so_luong.value == 0) {
+                so_luong.value = 1;
+            }else {
+                so_luong.value = parseInt(so_luong.value) + 1;
+            }
+        }
+
     </script>
 @endsection

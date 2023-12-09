@@ -25,6 +25,10 @@ use App\Http\Controllers\DashboardController;
 
 Route::post('/nhap-kho/tao-phieu/store', [NhapKhoController::class, 'store'])->name('api.nhap-kho.store');
 Route::post('/nhap-kho/tao-phieu/them-hang', [NhapKhoController::class, 'add'])->name('api.them-hang.add');
+Route::get('/nhap-kho/tao-phieu/get-list-hang-nhap/{id}', [NhapKhoController::class, 'getListHangNhap'])->name('api.them-hang.get_list_hang_nhap');
+Route::get('/nhap-kho/tao-phieu/get-list-hang-nhap-sse/{id}', [NhapKhoController::class, 'getListHangNhapSse'])->name('api.them-hang.getListHangNhapSse');
+
+
 
 Route::post('/tao-phieu', [XuatKhoController::class, 'store'])->name('api.xuat-kho.store');
 // Route::post('/xuat-kho/tao-phieu/store', [XuatKhoController::class, 'store'])->name('api.xuat-kho.store');
@@ -66,6 +70,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::post('/sale-history', [XuatKhoController::class, 'saleHistory']);
+
+    // Nhập kho
+    Route::get('/nhap-kho/tao-phieu/lay-phien-nhap', [NhapKhoController::class, 'layPhienNhap'])->name('api.them-hang.lay-phien_nhap');
+    Route::post('/nhap-kho/tao-phieu/qr-nhap', [NhapKhoController::class, 'qrNhapKho'])->name('api.them-hang.qr-nhap');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

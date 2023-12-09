@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PhienNhapHang;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\NhapKho;
 use App\Models\ChiTietHangHoa;
@@ -40,6 +41,7 @@ class NhapKhoController extends Controller
             }
         });
 
+
         return view('nhapkho.index', compact('phieu_nhap', 'ma_phieu_nhap', 'nha_cung_cap'));
     }
 
@@ -58,8 +60,37 @@ class NhapKhoController extends Controller
         $nextNumber = $lastNumber + 1;
         $ma_phieu_nhap = 'PN' . str_pad($nextNumber, $lastNumberLength, '0', STR_PAD_LEFT);
 
+        $user = auth()->user();
+        // Kiểm tra xem user này có phiên nhập nào chưa
+            $phienNhapExists = PhienNhapHang::where('user_id', $user->id)->get();
+            $phienNhap = null;
+            $currentDateTime = Carbon::now();
+            $listIdDelete = array();
+            foreach ($phienNhapExists as $phienNhapExist) {
+                // phiên nhập đã hết hạn (thời gian update > 1 tiếng) => xóa
+                $updateTime = Carbon::parse($phienNhapExist->updated_at);
+                if($phienNhapExist->status == 1 && $currentDateTime->diffInHours($updateTime) > 1) {
+                    array_push($listIdDelete, $phienNhapExist->id);
+                }
+                // Phiên nhập đã tạo nhưng chưa quét Qr lần nào
+                if( $phienNhapExist->status == 0) {
+                    if($phienNhap == null) {
+                        $phienNhap = $phienNhapExist;
+                    }else {
+                    array_push($listIdDelete, $phienNhapExist->id);
+                    }
+                }
+            }
+            PhienNhapHang::whereIn('id',$listIdDelete)->delete();
+            if($phienNhap == null) {
+            // Tạo phiên nhập hàng mới
+            $phienNhap = new PhienNhapHang();
+            $phienNhap->user_id = auth()->user()->id;
+            $phienNhap->status = 0;
+            $phienNhap->save();
+        }
 
-        return view('nhapkho.create', compact('ma_phieu_nhap', 'hang_hoa', 'nha_cung_cap', 'loai_hang'));
+        return view('nhapkho.create', compact('ma_phieu_nhap', 'hang_hoa', 'nha_cung_cap', 'loai_hang','phienNhap'));
     }
 
     /**

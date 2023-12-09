@@ -12,7 +12,7 @@
                                 <nav>
                                     <ol class="breadcrumb breadcrumb-arrow mb-0">
                                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a>
-                                        <li class="breadcrumb-item"><a href="{{ route('hang-hoa.index') }}">Quản lý kho</a>
+                                        <li class="breadcrumb-item"><a href="{{ route('hang-hoa.index') }}">Quản lý siêu thị</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">{{ $hang_hoa->ten_hang_hoa }}</li>
                                     </ol>
