@@ -86,9 +86,9 @@
                                                                 <div class="form-control-wrap">
                                                                     <input type="text" class="form-control" id="dia_chi" name="dia_chi" value="{{ old('dia_chi') }}" placeholder="Địa chỉ">
                                                                 </div>
-                                                                {{-- @if ($errors)
+                                                                @if ($errors)
                                                                     <span class="text-danger py-1 mt-2">{{ $errors->first('dia_chi') }}</span>
-                                                                @endif --}}
+                                                                @endif
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
